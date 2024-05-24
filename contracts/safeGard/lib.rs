@@ -14,12 +14,11 @@ pub mod safe_guard {
             reentrancy_guard,
             traits::psp22::PSP22Error,
         },
-        storage::Mapping,
         traits::{
-            Storage,
-            String,
+            Storage, String
         },
     };
+    use ink::storage::Mapping;
     use psp22::PSP22;
 
     #[ink(storage)]
@@ -34,12 +33,14 @@ pub mod safe_guard {
         qtd_vote_no: u64,
         balance_yes: Balance,
         balance_no: Balance,
-        vote: Mapping<AccountId, bool>,
+        vote: Mapping<AccountId, u64>,
         status_withdraw: bool, // if true, then the contract is active for withdraw and finish
-
         status: bool, // if true, then active for vote
         pair_psp22: Option<AccountId>,
         withdraw: Mapping<AccountId, Balance>,
+        balance_permission: Balance,
+        balance_withdraw_per_lunes: Balance,
+        balance_reward: Balance,
     }
     #[derive(Debug, PartialEq, Clone, Eq, scale::Encode, scale::Decode)]
     #[cfg_attr(feature = "std", derive(scale_info::TypeInfo))]
@@ -49,6 +50,9 @@ pub mod safe_guard {
         pub qtd_vote_no: u64,
         pub balance_yes: Balance,
         pub balance_no: Balance,
+        pub balance_reward: Balance,
+        pub balance_permission: Balance,
+
     }
 
     impl Safeguard {
@@ -63,9 +67,12 @@ pub mod safe_guard {
             instance.data_vote_end = 0u64;
             instance.balance_yes = 0u128;
             instance.balance_no = 0u128;
+            instance.balance_permission = 0u128;
             instance.status_withdraw = false;
+            instance.balance_withdraw_per_lunes = 0u128;
             instance.status = false;
             instance.vote = Mapping::default();
+            instance.balance_reward = 0u128;
             instance
         }
 
@@ -80,14 +87,20 @@ pub mod safe_guard {
             let psp22_contract_address = self.pair_psp22.unwrap();
             let token: contract_ref!(PSP22) = psp22_contract_address.into();
             let balance = token.balance_of(caller);
-            if balance == 0u128 {
-                return Err(PSP22Error::Custom(String::from("User don't have balance")));
+            if balance < self.balance_permission {
+                return Err(PSP22Error::Custom(String::from("User don't have sufficient balance")));
             }
-            let qtd_vote = self.vote.get(&caller);
-            if qtd_vote.is_some() {
-                return Err(PSP22Error::Custom(String::from("You have already voted")));
+            let date_vote = self.vote.get(&caller);
+            let date_block = Self::env().block_timestamp() + 86399357u64; //1day
+
+            if date_vote.is_some() {
+                if date_vote.unwrap() < date_block {
+                    return Err(PSP22Error::Custom(String::from("You have already voted")));
+                }
+                
             }
-            self.vote.insert(&caller, &_value);
+            self.vote.insert(&caller, &date_block);
+            
 
             if _value == true {
                 self.qtd_vote_yes += 1;
@@ -100,17 +113,19 @@ pub mod safe_guard {
         }
         #[openbrush::modifiers(only_owner)]
         #[ink(message)]
-        pub fn vote_active(&mut self, _value: bool) -> Result<(), PSP22Error> {
+        pub fn vote_active(&mut self, _value: bool, balance_min: Balance) -> Result<(), PSP22Error> {
+
             if self.status_withdraw == true {
                 return Err(PSP22Error::Custom(String::from("Contract not active")));
             }
-            if _value == true {
-                self.vote = Mapping::default();
+
+            if _value == true {    
                 self.qtd_vote_yes = 0u64;
                 self.qtd_vote_no = 0u64;
                 self.balance_yes = 0u128;
                 self.balance_no = 0u128;
                 self.data_vote_end = 0u64;
+                self.balance_permission = balance_min;
             }else {
                 self.data_vote_end = Self::env().block_timestamp();
             }
@@ -120,22 +135,20 @@ pub mod safe_guard {
 
         #[openbrush::modifiers(only_owner)]
         #[ink(message)]
-        pub fn finish_and_active_withdraw(&mut self) -> Result<(), PSP22Error> {
+        pub fn finish_and_active_withdraw(&mut self, balance_per_lunes: Balance) -> Result<(), PSP22Error> {
             if self.status_withdraw == true {
                 return Err(PSP22Error::Custom(String::from("Contract not active")));
             }
             self.status_withdraw = true;
+            self.balance_withdraw_per_lunes = balance_per_lunes;
+            let balance = Self::env().balance();
+            let current_balance = balance
+                .checked_sub(Self::env().minimum_balance())
+                .unwrap_or_default();
+            self.balance_reward = current_balance;
             Ok(())
         }
-        #[ink(message)]
-        pub fn get_vote(&mut self, accontid: AccountId) -> Result<bool, PSP22Error> {
-            let votes = self.vote.get(&accontid);
-            if votes.is_none() {
-                return Err(PSP22Error::Custom(String::from("No votes")));
-            }
-            self.status_withdraw = true;
-            Ok(votes.unwrap())
-        }
+        
         #[ink(message)]
         pub fn get_qtd_votes(&mut self) -> Result<InfoContract, PSP22Error> {
             Ok(InfoContract {
@@ -144,58 +157,63 @@ pub mod safe_guard {
                 qtd_vote_no: self.qtd_vote_no,
                 balance_yes: self.balance_yes,
                 balance_no: self.balance_no,
+                balance_reward: self.balance_reward,
+                balance_permission: self.balance_permission,
             })
         }
+        #[openbrush::modifiers(only_owner)]
         #[ink(message)]
-        pub fn withdraw(&mut self) -> Result<(), PSP22Error> {
+        pub fn withdraw(&mut self, balance: Balance) -> Result<Balance, PSP22Error> {
             if !self.status_withdraw {
                 return Err(PSP22Error::Custom(String::from("Contract not active")));
             }
             let caller = self.env().caller();
 
-            let psp22_contract_address = self.pair_psp22.unwrap();
-            let token: contract_ref!(PSP22) = psp22_contract_address.into();
-            let balance = token.balance_of(caller);
-            if balance == 0u128 {
+            if balance < self.balance_permission {
                 return Err(PSP22Error::Custom(String::from("User don't have balance")));
             }
             let is_withdraw = self.withdraw.get(&caller);
             if is_withdraw.is_some() {
                 return Err(PSP22Error::Custom(String::from("User already withdraw")));
             }
-            let supply = token.total_supply();
-            let balance = Self::env().balance();
-            let current_balance = balance
-                .checked_sub(Self::env().minimum_balance())
-                .unwrap_or_default();
+            let psp22_contract_address = self.pair_psp22.unwrap();
+            let token: contract_ref!(PSP22) = psp22_contract_address.into();
+            let supply:i128 = token.total_supply() as i128;
+            let value_per_token: i128 = self.balance_withdraw_per_lunes as i128;
 
-            let porcent = ((balance * 100) / supply) as u128;
+            let amount_per_token: i128     = supply / value_per_token;
 
-            let total_withdraw = ((current_balance * porcent) / 100u128) as u128;
+            let balance_user: i128 = balance as i128;            
+            let balance_in_supply = balance_user / value_per_token;
+            
+            
+            let balance_in_contract:i128 = self.balance_reward as i128;
+            let parc_participation_in_contract = (balance_in_supply as f64 / amount_per_token as f64 ) * 100 as f64;
+ 
+            
+            let total_rewards = (( balance_in_contract as f64 * parc_participation_in_contract as f64) / 100 as f64) as Balance;
+            if total_rewards < self.balance_permission {
+                return Err(PSP22Error::Custom(String::from("User don't have sufficient balance")));
+            }    
+
             Self::env()
-                .transfer(caller, total_withdraw)
+                .transfer(caller, total_rewards)
                 .map_err(|_| PSP22Error::Custom(String::from("Tranfer error")))?;
-
-            self.withdraw.insert(&caller, &total_withdraw);
-            Ok(())
+          
+            self.withdraw.insert(&caller, &total_rewards);
+            Ok(total_rewards)
         }
     }
     #[cfg(test)]
     mod tests {
         use super::*;
-        use ink::env::test::default_accounts;
 
         #[ink::test]
         fn test_withdraw() {
             let mut safe_guard = Safeguard::new(None);
-            assert_eq!(safe_guard.withdraw(), Ok(()));
+            assert_eq!(safe_guard.withdraw(0), Ok(0));
         }
-        #[ink::test]
-        fn test_get_vote() {
-            let accounts = default_accounts::<ink::env::DefaultEnvironment>();
-            let mut safe_guard = Safeguard::new(None);
-            assert_eq!(safe_guard.get_vote(accounts.alice), Ok(false));
-        }
+        
 
         #[ink::test]
         fn test_get_qtd_votes() {
@@ -206,19 +224,21 @@ pub mod safe_guard {
                 qtd_vote_no: 0u64,
                 balance_yes: 0u128,
                 balance_no: 0u128,
+                balance_reward: 0u128,
+                balance_permission: 0u128,
             }));
         }
 
         #[ink::test]
         fn test_finish_and_active_withdraw() {
             let mut safe_guard = Safeguard::new(None);
-            assert_eq!(safe_guard.finish_and_active_withdraw(), Ok(()));
+            assert_eq!(safe_guard.finish_and_active_withdraw(100), Ok(()));
         }
 
         #[ink::test]
         fn test_vote_active() {
             let mut safe_guard = Safeguard::new(None);
-            assert_eq!(safe_guard.vote_active(true), Ok(()));
+            assert_eq!(safe_guard.vote_active(true, 100), Ok(()));
         }
 
         #[ink::test]
