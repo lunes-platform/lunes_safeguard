@@ -41,6 +41,7 @@ pub mod safe_guard {
         balance_permission: Balance,
         balance_withdraw_per_lunes: Balance,
         balance_reward: Balance,
+        id: u64,
     }
     #[derive(Debug, PartialEq, Clone, Eq, scale::Encode, scale::Decode)]
     #[cfg_attr(feature = "std", derive(scale_info::TypeInfo))]
@@ -73,6 +74,7 @@ pub mod safe_guard {
             instance.status = false;
             instance.vote = Mapping::default();
             instance.balance_reward = 0u128;
+            instance.id = 0u64;
             instance
         }
 
@@ -91,15 +93,14 @@ pub mod safe_guard {
                 return Err(PSP22Error::Custom(String::from("User don't have sufficient balance")));
             }
             let date_vote = self.vote.get(&caller);
-            let date_block = Self::env().block_timestamp() + 86399357u64; //1day
 
             if date_vote.is_some() {
-                if date_vote.unwrap() < date_block {
+                if date_vote.unwrap() == self.id {
                     return Err(PSP22Error::Custom(String::from("You have already voted")));
                 }
                 
             }
-            self.vote.insert(&caller, &date_block);
+            self.vote.insert(&caller, &self.id);
             
 
             if _value == true {
@@ -126,6 +127,7 @@ pub mod safe_guard {
                 self.balance_no = 0u128;
                 self.data_vote_end = 0u64;
                 self.balance_permission = balance_min;
+                self.id += 1;
             }else {
                 self.data_vote_end = Self::env().block_timestamp();
             }
