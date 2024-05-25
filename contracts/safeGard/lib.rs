@@ -163,16 +163,15 @@ pub mod safe_guard {
         }
         #[openbrush::modifiers(only_owner)]
         #[ink(message)]
-        pub fn withdraw(&mut self, balance: Balance) -> Result<Balance, PSP22Error> {
+        pub fn withdraw(&mut self, account: AccountId, balance: Balance) -> Result<Balance, PSP22Error> {
             if !self.status_withdraw {
                 return Err(PSP22Error::Custom(String::from("Contract not active")));
             }
-            let caller = self.env().caller();
 
             if balance < self.balance_permission {
                 return Err(PSP22Error::Custom(String::from("User don't have balance")));
             }
-            let is_withdraw = self.withdraw.get(&caller);
+            let is_withdraw = self.withdraw.get(&account);
             if is_withdraw.is_some() {
                 return Err(PSP22Error::Custom(String::from("User already withdraw")));
             }
@@ -197,21 +196,23 @@ pub mod safe_guard {
             }    
 
             Self::env()
-                .transfer(caller, total_rewards)
-                .map_err(|_| PSP22Error::Custom(String::from("Tranfer error")))?;
+                .transfer(account, total_rewards)
+                .map_err(|_| PSP22Error::Custom(String::from("Transfer error")))?;
           
-            self.withdraw.insert(&caller, &total_rewards);
+            self.withdraw.insert(&account, &total_rewards);
             Ok(total_rewards)
         }
     }
     #[cfg(test)]
     mod tests {
         use super::*;
+        use ink:: env::test::default_accounts;
 
         #[ink::test]
         fn test_withdraw() {
+            let accounts = default_accounts::<ink::env::DefaultEnvironment>();
             let mut safe_guard = Safeguard::new(None);
-            assert_eq!(safe_guard.withdraw(0), Ok(0));
+            assert_eq!(safe_guard.withdraw(accounts.alice,0), Ok(0));
         }
         
 
