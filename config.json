@@ -1,0 +1,7 @@
+{
+    "projectFiles": ["contracts/safeGard/**/*"],
+    "typechainGeneratedPath": "types",
+    "isWorkspace": true,
+    "workspacePath": "./"
+  }
+  
