@@ -163,6 +163,11 @@ pub mod safe_guard {
                 balance_permission: self.balance_permission,
             })
         }
+        #[ink(message)]
+        pub fn get_project(&mut self) -> Result<Option<AccountId>, PSP22Error> {
+            Ok(self.pair_psp22)
+        }
+
         #[openbrush::modifiers(only_owner)]
         #[ink(message)]
         pub fn withdraw(&mut self, account: AccountId, balance: Balance) -> Result<Balance, PSP22Error> {
