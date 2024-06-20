@@ -30,17 +30,14 @@ pub mod safe_guard {
         ownable: ownable::Data,
         data_vote_end: u64,
         qtd_vote_yes: u64,
-        qtd_vote_no: u64,
-        balance_yes: Balance,
-        balance_no: Balance,
+        qtd_vote_no: u64,      
         vote: Mapping<AccountId, u64>,
-        status_withdraw: bool, // if true, then the contract is active for withdraw and finish
-        status: bool, // if true, then active for vote
-        pair_psp22: Option<AccountId>,
-        withdraw: Mapping<AccountId, Balance>,
+        status_withdraw: bool, 
+        status: bool,
         balance_permission: Balance,
+        pair_psp22: Option<AccountId>,
+        withdraw: Mapping<AccountId, Balance>,        
         balance_withdraw_per_lunes: Balance,
-        balance_reward: Balance,
         id: u64,
     }
     #[derive(Debug, PartialEq, Clone, Eq, scale::Encode, scale::Decode)]
@@ -49,10 +46,8 @@ pub mod safe_guard {
         pub data_vote_end: u64,
         pub qtd_vote_yes: u64,
         pub qtd_vote_no: u64,
-        pub balance_yes: Balance,
-        pub balance_no: Balance,
-        pub balance_reward: Balance,
-        pub balance_permission: Balance,
+        pub pair_psp22: Option<AccountId>,
+        pub status_withdraw: bool,
 
     }
 
@@ -66,15 +61,13 @@ pub mod safe_guard {
             instance.qtd_vote_yes = 0u64;
             instance.qtd_vote_no = 0u64;
             instance.data_vote_end = 0u64;
-            instance.balance_yes = 0u128;
-            instance.balance_no = 0u128;
-            instance.balance_permission = 0u128;
-            instance.status_withdraw = false;
-            instance.balance_withdraw_per_lunes = 0u128;
-            instance.status = false;
             instance.vote = Mapping::default();
-            instance.balance_reward = 0u128;
+            instance.withdraw = Mapping::default();
             instance.id = 0u64;
+            instance.status = false;
+            instance.status_withdraw = false;
+            instance.balance_permission = 0u128;
+            instance.balance_withdraw_per_lunes = 0u128;
             instance
         }
 
@@ -105,10 +98,8 @@ pub mod safe_guard {
 
             if _value == true {
                 self.qtd_vote_yes += 1;
-                self.balance_yes += balance;
             } else {
                 self.qtd_vote_no += 1;
-                self.balance_no += balance;
             }
             Ok(())
         }
@@ -123,8 +114,6 @@ pub mod safe_guard {
             if _value == true {    
                 self.qtd_vote_yes = 0u64;
                 self.qtd_vote_no = 0u64;
-                self.balance_yes = 0u128;
-                self.balance_no = 0u128;
                 self.data_vote_end = 0u64;
                 self.balance_permission = balance_min;
                 self.id += 1;
@@ -143,11 +132,7 @@ pub mod safe_guard {
             }
             self.status_withdraw = true;
             self.balance_withdraw_per_lunes = balance_per_lunes;
-            let balance = Self::env().balance();
-            let current_balance = balance
-                .checked_sub(Self::env().minimum_balance())
-                .unwrap_or_default();
-            self.balance_reward = current_balance;
+            
             Ok(())
         }
         
@@ -157,57 +142,36 @@ pub mod safe_guard {
                 data_vote_end: self.data_vote_end,
                 qtd_vote_yes: self.qtd_vote_yes,
                 qtd_vote_no: self.qtd_vote_no,
-                balance_yes: self.balance_yes,
-                balance_no: self.balance_no,
-                balance_reward: self.balance_reward,
-                balance_permission: self.balance_permission,
+                pair_psp22: self.pair_psp22,
+                status_withdraw: self.status_withdraw,
             })
         }
-        #[ink(message)]
+       /*  #[ink(message)]
         pub fn get_project(&mut self) -> Result<Option<AccountId>, PSP22Error> {
             Ok(self.pair_psp22)
         }
-
+*/
         #[openbrush::modifiers(only_owner)]
         #[ink(message)]
-        pub fn withdraw(&mut self, account: AccountId, balance: Balance) -> Result<Balance, PSP22Error> {
+        pub fn withdraw(&mut self, account: AccountId, amount: Balance) -> Result<Balance, PSP22Error> {
             if !self.status_withdraw {
                 return Err(PSP22Error::Custom(String::from("Contract not active")));
             }
 
-            if balance < self.balance_permission {
+            if amount < self.balance_permission {
                 return Err(PSP22Error::Custom(String::from("User don't have balance")));
             }
             let is_withdraw = self.withdraw.get(&account);
             if is_withdraw.is_some() {
                 return Err(PSP22Error::Custom(String::from("User already withdraw")));
             }
-            let psp22_contract_address = self.pair_psp22.unwrap();
-            let token: contract_ref!(PSP22) = psp22_contract_address.into();
-            let supply:i128 = token.total_supply() as i128;
-            let value_per_token: i128 = self.balance_withdraw_per_lunes as i128;
-
-            let amount_per_token: i128     = supply / value_per_token;
-
-            let balance_user: i128 = balance as i128;            
-            let balance_in_supply = balance_user / value_per_token;
-            
-            
-            let balance_in_contract:i128 = self.balance_reward as i128;
-            let parc_participation_in_contract = (balance_in_supply as f64 / amount_per_token as f64 ) * 100 as f64;
- 
-            
-            let total_rewards = (( balance_in_contract as f64 * parc_participation_in_contract as f64) / 100 as f64) as Balance;
-            if total_rewards < self.balance_permission {
-                return Err(PSP22Error::Custom(String::from("User don't have sufficient balance")));
-            }    
 
             Self::env()
-                .transfer(account, total_rewards)
+                .transfer(account, amount)
                 .map_err(|_| PSP22Error::Custom(String::from("Transfer error")))?;
           
-            self.withdraw.insert(&account, &total_rewards);
-            Ok(total_rewards)
+            self.withdraw.insert(&account, &amount);
+            Ok(amount)
         }
     }
     #[cfg(test)]
@@ -230,10 +194,8 @@ pub mod safe_guard {
                 data_vote_end: 0u64,
                 qtd_vote_yes: 0u64,
                 qtd_vote_no: 0u64,
-                balance_yes: 0u128,
-                balance_no: 0u128,
-                balance_reward: 0u128,
-                balance_permission: 0u128,
+                pair_psp22: None,
+                status_withdraw: false,                
             }));
         }
 
