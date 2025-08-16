@@ -26,15 +26,15 @@ export function Dashboard() {
   return (
     <div className="space-y-8">
       {/* Header */}
-      <div className="flex items-center gap-4">
-        <div className="p-3 bg-primary/10 rounded-[5px]">
-          <svg className="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <div className="flex items-center gap-3 md:gap-4 mb-6 md:mb-8">
+        <div className="p-2 md:p-3 bg-primary/10 rounded-[5px]">
+          <svg className="w-6 h-6 md:w-8 md:h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
           </svg>
         </div>
         <div>
-          <h1 className="text-3xl font-bold tracking-tight text-foreground">Dashboard</h1>
-          <p className="text-muted-foreground mt-2">
+          <h1 className="text-2xl md:text-3xl font-bold tracking-tight text-foreground">Dashboard</h1>
+          <p className="text-sm md:text-base text-muted-foreground mt-1 md:mt-2">
             Visão geral do sistema SafeGuard
           </p>
         </div>
@@ -43,9 +43,9 @@ export function Dashboard() {
 
 
       {/* Alertas e Atividades */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8">
         {/* Alertas */}
-        <Card className="p-6 card-modern">
+        <Card className="p-4 md:p-6 card-modern">
           <div className="flex items-center gap-3 mb-4">
             <div className="p-2 bg-yellow-500/10 rounded-[5px]">
               <AlertTriangle className="h-5 w-5 text-yellow-500" />
@@ -60,8 +60,8 @@ export function Dashboard() {
           </div>
         </Card>
 
-        {/* Atividades Recentes */}
-        <Card className="p-6 card-modern">
+        {/* Atividades */}
+        <Card className="p-4 md:p-6 card-modern">
           <div className="flex items-center gap-3 mb-4">
             <div className="p-2 bg-primary/10 rounded-[5px]">
               <svg className="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">

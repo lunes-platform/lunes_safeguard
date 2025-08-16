@@ -51,25 +51,32 @@ const Projects: React.FC = () => {
 
   return (
     <div className="p-6 min-h-screen bg-background">
-      <div className="flex justify-between items-center mb-8">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 md:mb-8">
         <div>
-          <h1 className="text-3xl font-bold text-foreground mb-2">Projetos</h1>
-          <p className="text-muted-foreground">Gerencie seus projetos SafeGuard</p>
+          <h1 className="text-2xl md:text-3xl font-bold text-foreground mb-2">
+            Projetos
+          </h1>
+          <p className="text-sm md:text-base text-muted-foreground">
+            Gerencie e monitore todos os projetos de garantia
+          </p>
         </div>
-        <button 
-          onClick={() => setIsCreateModalOpen(true)}
-          className="btn-primary flex items-center gap-2"
-        >
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-          </svg>
-          Novo Projeto
-        </button>
+        
+        <div className="flex-shrink-0">
+          <button 
+            onClick={() => setIsCreateModalOpen(true)}
+            className="btn-primary flex items-center gap-2"
+          >
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+            </svg>
+            Novo Projeto
+          </button>
+        </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
         {/* Projeto 1 */}
-        <div className="card-modern p-6 group hover:border-primary/50 transition-all duration-300">
+        <div className="card-modern p-4 md:p-6 group hover:border-primary/50 transition-all duration-300">
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 bg-primary/10 rounded-[5px] flex items-center justify-center">
@@ -106,7 +113,7 @@ const Projects: React.FC = () => {
         </div>
 
         {/* Projeto 2 */}
-        <div className="card-modern p-6 group hover:border-primary/50 transition-all duration-300">
+        <div className="card-modern p-4 md:p-6 group hover:border-primary/50 transition-all duration-300">
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 bg-primary/10 rounded-[5px] flex items-center justify-center">
@@ -143,7 +150,7 @@ const Projects: React.FC = () => {
         </div>
 
         {/* Projeto 3 */}
-        <div className="card-modern p-6 group hover:border-primary/50 transition-all duration-300">
+        <div className="card-modern p-4 md:p-6 group hover:border-primary/50 transition-all duration-300">
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 bg-primary/10 rounded-[5px] flex items-center justify-center">

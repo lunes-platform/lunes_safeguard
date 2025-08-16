@@ -1,8 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Bell, Search, User, LogOut, Settings, ChevronDown, Wallet } from 'lucide-react';
+import { Bell, Search, User, LogOut, Settings, ChevronDown, Wallet, Menu } from 'lucide-react';
 import { Button } from '@safeguard/shared-ui';
 import { useAuth } from '../contexts/AuthContext';
 import Web3WalletModal from './Web3WalletModal';
+
+interface HeaderProps {
+  onToggleSidebar?: () => void;
+}
 
 /**
  * Header do Admin Dashboard
@@ -13,7 +17,7 @@ import Web3WalletModal from './Web3WalletModal';
  * - Menu do usuário com dropdown
  * - Sistema de login/logout
  */
-export function Header() {
+export function Header({ onToggleSidebar }: HeaderProps) {
   const { user, isAuthenticated, disconnectWallet, error } = useAuth();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isWalletModalOpen, setIsWalletModalOpen] = useState(false);
@@ -61,21 +65,29 @@ export function Header() {
     <header className="bg-card border-b border-border h-16 px-6 flex items-center justify-between shadow-sm sticky top-0 z-50">
       {/* Logo e Título */}
       <div className="flex items-center space-x-4">
+        {/* Botão Menu Mobile */}
+        <button 
+          onClick={onToggleSidebar}
+          className="lg:hidden p-2 text-muted-foreground hover:text-foreground hover:bg-accent rounded-[5px] transition-colors"
+        >
+          <Menu className="h-5 w-5" />
+        </button>
+        
         <div className="flex items-center gap-3">
           <div className="w-8 h-8 bg-primary rounded-[5px] flex items-center justify-center">
             <svg className="w-5 h-5 text-primary-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
             </svg>
           </div>
-          <h1 className="text-xl font-semibold text-foreground">
+          <h1 className="text-xl font-semibold text-foreground hidden sm:block">
             SafeGuard Admin
           </h1>
         </div>
       </div>
 
       {/* Barra de Pesquisa */}
-      <div className="flex-1 max-w-2xl mx-12">
-        <div className="relative">
+      <div className="hidden md:flex flex-1 max-w-2xl mx-4 lg:mx-12">
+        <div className="relative w-full">
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
           <input
             type="text"
@@ -83,6 +95,13 @@ export function Header() {
             className="input-modern pl-10 w-full"
           />
         </div>
+      </div>
+      
+      {/* Botão de Pesquisa Mobile */}
+      <div className="md:hidden">
+        <button className="p-2 text-muted-foreground hover:text-foreground hover:bg-accent rounded-[5px] transition-colors">
+          <Search className="h-5 w-5" />
+        </button>
       </div>
 
       {/* Ações do Usuário */}
