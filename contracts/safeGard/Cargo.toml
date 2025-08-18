@@ -1,31 +1,32 @@
 [package]
-name = "Safeguard"
+name = "safeguard"
 version = "1.0.0"
 edition = "2021"
-authors = ["Lunes "]
+authors = ["Lunes Platform"]
+description = "Secure governance and withdrawal contract for Lunes platform"
+license = "Apache-2.0"
 
 [dependencies]
-
-ink = { version = "4.3.0", default-features = false }
+ink = { version = "5.1.1", default-features = false }
 
 scale = { package = "parity-scale-codec", version = "3", default-features = false, features = ["derive"] }
-scale-info = { version = "2.6", default-features = false, features = ["derive"], optional = true }
+scale-info = { version = "2.11", default-features = false, features = ["derive"], optional = true }
 
-# Include brush as a dependency and enable default implementation for PSP22 via brush feature
-openbrush = { tag = "4.0.0-beta", git = "https://github.com/Brushfam/openbrush-contracts", default-features = false, features = ["ownable","reentrancy_guard"] }
-psp22 = { version = "1.0", default-features = false, features = ["ink-as-dependency"] }
+psp22 = { path = "../../interfaces/psp22", default-features = false, features = ["ink-as-dependency"] }
+
 [lib]
-name = "Safeguard"
+name = "safeguard"
 path = "lib.rs"
-
 
 [features]
 default = ["std"]
 std = [
     "ink/std",
     "scale/std",
-    "psp22/std",
     "scale-info/std",
-    "openbrush/std",
+    "psp22/std",
 ]
-ink-as-dependency = [] 
+ink-as-dependency = []
+
+[dev-dependencies]
+ink_e2e = "5.1.1"

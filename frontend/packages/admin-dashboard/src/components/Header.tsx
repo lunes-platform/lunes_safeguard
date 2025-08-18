@@ -1,8 +1,24 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Bell, Search, User, LogOut, Settings, ChevronDown, Wallet, Menu } from 'lucide-react';
-import { Button } from '@safeguard/shared-ui';
 import { useAuth } from '../contexts/AuthContext';
 import Web3WalletModal from './Web3WalletModal';
+
+// Componentes temporários para contornar problemas de dependência
+const Input = ({ type, placeholder, leftIcon, className, ...props }: any) => (
+  <div className={`relative ${className}`}>
+    {leftIcon && (
+      <div className="absolute left-3 top-1/2 transform -translate-y-1/2">
+        {leftIcon}
+      </div>
+    )}
+    <input
+      type={type}
+      placeholder={placeholder}
+      className={`w-full px-3 py-2 ${leftIcon ? 'pl-10' : ''} bg-background border border-border rounded-[5px] text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent`}
+      {...props}
+    />
+  </div>
+);
 
 interface HeaderProps {
   onToggleSidebar?: () => void;
@@ -87,12 +103,12 @@ export function Header({ onToggleSidebar }: HeaderProps) {
 
       {/* Barra de Pesquisa */}
       <div className="hidden md:flex flex-1 max-w-2xl mx-4 lg:mx-12">
-        <div className="relative w-full">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
-          <input
+        <div className="w-full">
+          <Input
             type="text"
             placeholder="Pesquisar projetos, garantias..."
-            className="input-modern pl-10 w-full"
+            leftIcon={<Search className="h-4 w-4 text-muted-foreground" />}
+            className="w-full"
           />
         </div>
       </div>

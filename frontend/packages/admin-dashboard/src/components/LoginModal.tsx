@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { X, Eye, EyeOff, LogIn } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
+import { Input, useEmailValidation, usePasswordValidation } from '@safeguard/shared-ui';
 
 interface LoginModalProps {
   isOpen: boolean;
@@ -17,13 +18,23 @@ interface LoginModalProps {
  * - Feedback visual de loading e erros
  */
 export function LoginModal({ isOpen, onClose }: LoginModalProps) {
-  const { login, isLoading } = useAuth();
+  const { connectWallet, isLoading } = useAuth();
   const [formData, setFormData] = useState({
     email: '',
     password: ''
   });
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
+
+  // Validação em tempo real para email
+  const emailValidation = useEmailValidation({
+    debounceMs: 300
+  });
+
+  // Validação em tempo real para senha
+  const passwordValidation = usePasswordValidation({
+    debounceMs: 300
+  });
 
   /**
    * Manipula mudanças nos campos do formulário
@@ -34,8 +45,29 @@ export function LoginModal({ isOpen, onClose }: LoginModalProps) {
       ...prev,
       [name]: value
     }));
+    
+    // Aplica validação em tempo real
+    if (name === 'email') {
+      emailValidation.handleChange(e);
+    } else if (name === 'password') {
+      passwordValidation.handleChange(e);
+    }
+    
     // Limpa erro quando usuário digita
     if (error) setError('');
+  };
+
+  /**
+   * Manipula perda de foco nos campos
+   */
+  const handleInputBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+    const { name } = e.target;
+    
+    if (name === 'email') {
+      emailValidation.handleBlur(e);
+    } else if (name === 'password') {
+      passwordValidation.handleBlur(e);
+    }
   };
 
   /**
@@ -44,30 +76,34 @@ export function LoginModal({ isOpen, onClose }: LoginModalProps) {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    // Validação básica
-    if (!formData.email || !formData.password) {
-      setError('Por favor, preencha todos os campos');
+    // Validação usando os hooks de validação
+    emailValidation.validate(formData.email);
+    passwordValidation.validate(formData.password);
+    
+    if (!emailValidation.state.isValid) {
+      setError(emailValidation.state.error || 'Email inválido');
       return;
     }
-
-    if (!formData.email.includes('@')) {
-      setError('Por favor, insira um email válido');
+    
+    if (!passwordValidation.state.isValid) {
+      setError(passwordValidation.state.error || 'Senha inválida');
       return;
     }
 
     try {
-      const success = await login(formData.email, formData.password);
+      // Para demonstração, vamos simular um login tradicional
+      // Em um cenário real, você faria uma chamada de API aqui
+      await new Promise(resolve => setTimeout(resolve, 1500));
       
-      if (success) {
-        // Reset form e fecha modal
-        setFormData({ email: '', password: '' });
-        setError('');
-        onClose();
-      } else {
-        setError('Credenciais inválidas. Tente: admin@safeguard.com / admin123');
-      }
+      // Simula login bem-sucedido - conecta a carteira
+      await connectWallet();
+      
+      // Reset form e fecha modal
+      setFormData({ email: '', password: '' });
+      setError('');
+      onClose();
     } catch (error) {
-      setError('Erro interno. Tente novamente.');
+      setError('Erro ao conectar. Tente novamente.');
     }
   };
 
@@ -77,14 +113,16 @@ export function LoginModal({ isOpen, onClose }: LoginModalProps) {
   const handleClose = () => {
     setFormData({ email: '', password: '' });
     setError('');
+    emailValidation.reset();
+    passwordValidation.reset();
     onClose();
   };
 
   if (!isOpen) return null;
 
   return (
-    <div className="modal-overlay">
-      <div className="modal-content max-w-md">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50">
+      <div className="bg-background border border-border rounded-lg shadow-lg w-full max-w-md max-h-[90vh] overflow-y-auto">
         {/* Header */}
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-3">
@@ -109,52 +147,46 @@ export function LoginModal({ isOpen, onClose }: LoginModalProps) {
         <form onSubmit={handleSubmit} className="space-y-4">
           {/* Email */}
           <div>
-            <label htmlFor="email" className="block text-sm font-medium text-foreground mb-2">
-              Email
-            </label>
-            <input
+            <Input
               id="email"
               name="email"
               type="email"
+              label="Email"
+              floatingLabel
               value={formData.email}
               onChange={handleInputChange}
-              className="input-modern w-full"
+              onBlur={handleInputBlur}
               placeholder="seu@email.com"
               disabled={isLoading}
               required
+              isValidating={emailValidation.state.isValidating}
+              isValid={emailValidation.state.isValid}
+              showValidationIcon
+              error={emailValidation.state.error || undefined}
             />
           </div>
 
           {/* Senha */}
           <div>
-            <label htmlFor="password" className="block text-sm font-medium text-foreground mb-2">
-              Senha
-            </label>
-            <div className="relative">
-              <input
-                id="password"
-                name="password"
-                type={showPassword ? 'text' : 'password'}
-                value={formData.password}
-                onChange={handleInputChange}
-                className="input-modern w-full pr-12"
-                placeholder="Sua senha"
-                disabled={isLoading}
-                required
-              />
-              <button
-                type="button"
-                onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3 top-1/2 -translate-y-1/2 p-1 hover:bg-muted rounded transition-colors"
-                disabled={isLoading}
-              >
-                {showPassword ? (
-                  <EyeOff className="w-4 h-4 text-muted-foreground" />
-                ) : (
-                  <Eye className="w-4 h-4 text-muted-foreground" />
-                )}
-              </button>
-            </div>
+            <Input
+              id="password"
+              name="password"
+              type={showPassword ? 'text' : 'password'}
+              label="Senha"
+              floatingLabel
+              value={formData.password}
+              onChange={handleInputChange}
+              onBlur={handleInputBlur}
+              placeholder="Sua senha"
+              disabled={isLoading}
+              required
+              isValidating={passwordValidation.state.isValidating}
+              isValid={passwordValidation.state.isValid}
+              showValidationIcon
+              rightIcon={showPassword ? EyeOff : Eye}
+               onRightIconClick={() => setShowPassword(!showPassword)}
+               error={passwordValidation.state.error || undefined}
+            />
           </div>
 
           {/* Erro */}

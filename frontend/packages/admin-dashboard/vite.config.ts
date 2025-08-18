@@ -1,10 +1,24 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import path from 'path';
+import { nodePolyfills } from 'vite-plugin-node-polyfills';
 
-// https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react()],
+  plugins: [
+    react(),
+    nodePolyfills({
+      // Options for the plugin
+      protocolImports: true, // if you want to use `node:crypto`
+    }),
+  ],
+  define: {
+    global: 'globalThis',
+    'process.env': {},
+  },
+  optimizeDeps: {
+    include: ['react', 'react-dom', 'use-sync-external-store'],
+    exclude: ['chrome-extension'],
+  },
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
@@ -14,24 +28,10 @@ export default defineConfig({
       '@/utils': path.resolve(__dirname, './src/utils'),
       '@/types': path.resolve(__dirname, './src/types'),
       '@/assets': path.resolve(__dirname, './src/assets'),
-      buffer: 'buffer',
     },
-  },
-  define: {
-    global: 'globalThis',
-  },
-  optimizeDeps: {
-    include: ['buffer'],
   },
   server: {
     port: 5173,
     host: true,
-  },
-  build: {
-    outDir: 'dist',
-    sourcemap: true,
-    rollupOptions: {
-      external: [],
-    },
   },
 });

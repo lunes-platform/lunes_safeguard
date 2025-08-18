@@ -1,5 +1,4 @@
-import React from 'react';
-import { Card } from '@safeguard/shared-ui';
+import React, { useState, useEffect } from 'react';
 import { 
   Shield, 
   TrendingUp, 
@@ -8,6 +7,33 @@ import {
   CheckCircle,
   Vote
 } from 'lucide-react';
+
+// Componentes temporários até a correção do @safeguard/shared-ui
+const Card: React.FC<{ children: React.ReactNode; className?: string }> = ({ children, className = '' }) => (
+  <div className={`bg-card text-card-foreground border border-border rounded-[5px] shadow-sm hover:shadow-md transition-all duration-200 ${className}`}>
+    {children}
+  </div>
+);
+
+const LoadingPage: React.FC<{ variant?: string }> = () => (
+  <div className="flex items-center justify-center min-h-[400px]">
+    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+  </div>
+);
+
+const useLoadingDelay = (delay: number = 1000) => {
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, delay);
+
+    return () => clearTimeout(timer);
+  }, [delay]);
+
+  return isLoading;
+};
 
 
 /**
@@ -20,8 +46,14 @@ import {
  * - Atividades recentes
  */
 export function Dashboard() {
-  // TODO: Substituir por dados reais do React Query
+  // Simula carregamento de dados (substituir por React Query)
+  const isLoading = useLoadingDelay(2000); // 2 segundos de carregamento
   const metrics: any[] = [];
+  
+  // Exibe skeleton durante carregamento
+  if (isLoading) {
+    return <LoadingPage variant="dashboard" />;
+  }
   
   return (
     <div className="space-y-8">

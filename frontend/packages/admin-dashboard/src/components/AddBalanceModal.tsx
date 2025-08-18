@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { X, Plus, Wallet } from 'lucide-react';
-import { Toast, useCurrencyFormat } from '@safeguard/shared-ui';
+import { Toast, useCurrencyFormat, Input, RadioGroup } from '@safeguard/shared-ui';
 
 /**
  * Schema de validação para adicionar saldo ao cofre
@@ -154,26 +154,18 @@ export const AddBalanceModal: React.FC<AddBalanceModalProps> = ({
             <label className="text-sm font-medium text-foreground">
               Tipo de Token *
             </label>
-            <div className="grid grid-cols-2 gap-3">
-              <label className="flex items-center space-x-2 cursor-pointer">
-                <input
-                  type="radio"
-                  value="LUNES"
-                  {...register('tokenType')}
-                  className="text-primary focus:ring-primary"
-                />
-                <span className="text-sm text-foreground">LUNES</span>
-              </label>
-              <label className="flex items-center space-x-2 cursor-pointer">
-                <input
-                  type="radio"
-                  value="LUSTD"
-                  {...register('tokenType')}
-                  className="text-primary focus:ring-primary"
-                />
-                <span className="text-sm text-foreground">LUSTD</span>
-              </label>
-            </div>
+            <RadioGroup
+               options={[
+                 { value: 'LUNES', label: 'LUNES', description: 'Token nativo da rede Lunes' },
+                 { value: 'LUSTD', label: 'LUSTD', description: 'Stablecoin da rede Lunes' }
+               ]}
+               value={selectedTokenType}
+               onChange={(value) => setValue('tokenType', value as 'LUNES' | 'LUSTD')}
+               orientation="horizontal"
+               itemVariant="card"
+               required
+               error={!!errors.tokenType}
+             />
             {errors.tokenType && (
               <p className="text-sm text-destructive">{errors.tokenType.message}</p>
             )}
@@ -184,14 +176,10 @@ export const AddBalanceModal: React.FC<AddBalanceModalProps> = ({
             <label className="text-sm font-medium text-foreground">
               Valor a Depositar ({selectedTokenType}) *
             </label>
-            <input
+            <Input
               type="text"
               placeholder="0,00"
-              className={`w-full px-3 py-2 border rounded-md bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent ${
-                errors.amount || amountError
-                  ? 'border-destructive focus:ring-destructive'
-                  : 'border-input'
-              }`}
+              className={errors.amount || amountError ? 'border-destructive focus:ring-destructive' : ''}
               {...amountHandlers}
             />
             {(errors.amount || amountError) && (

@@ -1,8 +1,26 @@
 import React from 'react';
 import { Navigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
-import { Card, Button } from '@safeguard/shared-ui';
 import { Wallet, Shield, ArrowRight } from 'lucide-react';
+
+// Componentes temporários até a correção do @safeguard/shared-ui
+const Card: React.FC<{ children: React.ReactNode; className?: string }> = ({ children, className = '' }) => (
+  <div className={`bg-card text-card-foreground border border-border rounded-[5px] shadow-sm hover:shadow-md transition-all duration-200 ${className}`}>
+    {children}
+  </div>
+);
+
+const Button: React.FC<React.ButtonHTMLAttributes<HTMLButtonElement> & { 
+  size?: string; 
+  variant?: string; 
+}> = ({ children, className = '', size, variant, ...props }) => (
+  <button 
+    className={`px-4 py-2 rounded-[5px] font-medium transition-all duration-200 bg-primary text-primary-foreground hover:bg-primary/90 focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background shadow-sm hover:shadow-md disabled:opacity-50 disabled:cursor-not-allowed ${className}`} 
+    {...props}
+  >
+    {children}
+  </button>
+);
 
 /**
  * Página de Login
