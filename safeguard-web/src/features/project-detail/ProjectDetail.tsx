@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { Helmet } from 'react-helmet-async'
 import { motion } from 'framer-motion'
-import { ArrowLeft, Shield, TrendingUp, Users, Calendar, AlertTriangle, Info, Loader2, ArrowUpRight } from 'lucide-react'
+import { ArrowLeft, Shield, TrendingUp, Users, Calendar, AlertTriangle, Info, Loader2, ArrowUpRight, ExternalLink } from 'lucide-react'
 import { Button } from "../../components/ui/Button"
 import { Card } from "../../components/ui/Card"
 import { Badge } from "../../components/ui/Badge"
@@ -11,6 +11,7 @@ import { formatCurrency, formatDate } from '../../utils/formatters'
 import type { Project } from '../../types'
 
 import { contractService } from '../../services/contractService'
+import { DonutChart } from '../../components/charts/DonutChart'
 
 const ProjectDetail = () => {
   const { id } = useParams<{ id: string }>()
