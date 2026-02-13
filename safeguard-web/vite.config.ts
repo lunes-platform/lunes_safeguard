@@ -24,7 +24,7 @@ export default defineConfig(({ command }) => ({
           'seo-vendor': ['react-helmet-async'],
           'modals': [
             './src/components/modals/DepositModal',
-            './src/components/modals/VoteModal', 
+            './src/components/modals/VoteModal',
             './src/components/modals/ClaimModal'
           ],
           'seo': [
@@ -46,12 +46,12 @@ export default defineConfig(({ command }) => ({
   },
   server: command === 'serve' ? {
     host: 'localhost',
-    port: 3001,
+    port: 3002,
     strictPort: true,
     hmr: {
       host: 'localhost',
       protocol: 'ws',
-      port: 3001,
+      port: 3002,
     },
     headers: {
       // CSP for dev server; restart dev after changes

@@ -1,9 +1,9 @@
-name: Deploy on Prod and Dev (nome do projeto)
+name: Safeguard - Deploy on Prod
 
 on:
   push:
     branches:
-      - main (master)
+      - master
 
 jobs:
   deploy:
@@ -19,7 +19,7 @@ jobs:
           password: ${{ secrets.PASSWORD }}
           port: ${{ secrets.PORT }}
           source: "."
-          target: /root/api-miniapp (diretório do front)
+          target: /root/safeguard
       - name: Executing remote SSH commands using key
         uses: appleboy/ssh-action@v0.1.10
         with:
@@ -29,12 +29,11 @@ jobs:
           username: ${{ secrets.USER }}
           script: |
             # Get the branch name from the GitHub Actions context
-            TARGET_DIR="/root/api-miniapp" (diretório do front)
-            PM2_NAME="backend" (nome do processo no pm2 não pode ser duplicado)
-            ENV_FILE=".env-backend.production"
+            TARGET_DIR="/root/safeguard"
+            PM2_NAME="safeguard"
 
             echo "Deploying"
-
+            cd /root/safeguard/safeguard-web 
             # Stop and clean up the existing PM2 process
             pm2 stop $PM2_NAME || true
             pm2 delete $PM2_NAME || true
@@ -42,7 +41,6 @@ jobs:
             # Remove the old directory and pull the latest code           
             cd $TARGET_DIR
             ls $TARGET_DIR
-            cp /usr/src/envs/$ENV_FILE $TARGET_DIR/.env
 
             # Build and deploy the application
             npm install
