@@ -1,50 +1,49 @@
-name: Safeguard - Deploy on Prod
+name: Deploy on Prod
 
 on:
   push:
     branches:
-      - master
+      - main
 
 jobs:
   deploy:
     name: Deploy
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - name: copy files
-        uses: appleboy/scp-action@v0.1.7
-        with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USER }}
-          password: ${{ secrets.PASSWORD }}
-          port: ${{ secrets.PORT }}
-          source: "."
-          target: /root/safeguard
-      - name: Executing remote SSH commands using key
-        uses: appleboy/ssh-action@v0.1.10
-        with:
-          host: ${{ secrets.HOST }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          port: ${{ secrets.PORT }}
-          username: ${{ secrets.USER }}
-          script: |
-            # Get the branch name from the GitHub Actions context
-            TARGET_DIR="/root/safeguard"
-            PM2_NAME="safeguard"
+    - uses: actions/checkout@v2
+    - name: copy files
+      uses: appleboy/scp-action@v0.1.7
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USER }}
+        password: ${{ secrets.PASSWORD }}
+        port: ${{ secrets.PORT }}
+        source: "."
+        target: /root/safeguard
 
-            echo "Deploying"
-            cd /root/safeguard/safeguard-web 
-            # Stop and clean up the existing PM2 process
-            pm2 stop $PM2_NAME || true
-            pm2 delete $PM2_NAME || true
-
-            # Remove the old directory and pull the latest code           
-            cd $TARGET_DIR
-            ls $TARGET_DIR
-
-            # Build and deploy the application
-            npm install
-            npm run swagger-autogen
-            npm run build
-            pm2 start "npm start" --name $PM2_NAME
-            pm2 save
+    - name: SSH into remote server and run commands
+      uses: appleboy/ssh-action@v1.2.0
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USER }}
+        port: ${{ secrets.PORT }}
+        password: ${{ secrets.PASSWORD }}
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        script: |
+          export NVM_DIR=~/.nvm
+          source ~/.nvm/nvm.sh
+          TARGET_DIR=/root/safeguard
+          cd $TARGET_DIR
+          ls $TARGET_DIR          
+          PM2_NAME="safeguard"
+          cd /root/safeguard/safeguard-web
+          echo "Configuring PM2"
+          pm2 stop $PM2_NAME || true
+          pm2 delete $PM2_NAME || true
+          echo "pm2 $PM2_NAME e $TARGET_DIR"
+          echo "Deploying"
+          npm install
+          npm run build
+          pm2 start "npm run dev" --name $PM2_NAME
+          pm2 save          
+          echo "Finished"
