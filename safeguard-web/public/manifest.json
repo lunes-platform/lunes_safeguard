@@ -1,0 +1,51 @@
+{
+  "name": "SafeGard - Protocolo de Garantias Web3",
+  "short_name": "SafeGard",
+  "description": "Primeiro protocolo descentralizado de garantias para Web3 na rede Lunes",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#6366f1",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "lang": "pt-BR",
+  "categories": ["finance", "productivity", "business"],
+  "icons": [
+    {
+      "src": "/vite.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/screenshot-wide.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "SafeGard Dashboard"
+    },
+    {
+      "src": "/screenshot-narrow.png",
+      "sizes": "375x812",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "SafeGard Mobile"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Projetos",
+      "short_name": "Projetos",
+      "description": "Ver todos os projetos",
+      "url": "/projetos"
+    },
+    {
+      "name": "Governança",
+      "short_name": "Governança",
+      "description": "Participar da governança",
+      "url": "/governanca"
+    }
+  ]
+}

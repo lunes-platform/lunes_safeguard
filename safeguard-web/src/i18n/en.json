@@ -1,0 +1,492 @@
+{
+  "meta": {
+    "title": "SafeGard - First decentralized guarantee protocol for Web3",
+    "description": "More security and transparency for Lunes ecosystem investors. Segregated vaults, annual governance and public Guarantee Score (0–100) auditable on-chain."
+  },
+  "nav": {
+    "home": "Home",
+    "projects": "Projects",
+    "howItWorks": "How It Works",
+    "score": "Guarantee Score",
+    "governance": "Governance",
+    "blog": "Blog",
+    "faq": "FAQ",
+    "adminAccess": "Admin Access"
+  },
+  "governance": {
+    "meta": {
+      "title": "Governance - Voting and Proposals",
+      "description": "Participate in SafeGard's decentralized governance. Vote on proposals, approve projects and help shape the protocol's future."
+    },
+    "hero": {
+      "title": "Governance",
+      "subtitle": "Participate in decisions that shape SafeGard's future. Decentralized, transparent and auditable on-chain voting."
+    },
+    "stats": {
+      "activeVotes": "Active Votes",
+      "quorumRequired": "Quorum Required",
+      "votingPeriod": "Voting Days"
+    },
+    "filters": {
+      "search": "Search proposals...",
+      "allStatus": "All Status",
+      "active": "Active",
+      "passed": "Passed",
+      "rejected": "Rejected",
+      "expired": "Expired",
+      "allTypes": "All Types",
+      "projectApproval": "Project Approval",
+      "parameterChange": "Parameter Change",
+      "emergencyPause": "Emergency Pause",
+      "results": "results"
+    },
+    "status": {
+      "active": "Active",
+      "passed": "Passed",
+      "rejected": "Rejected",
+      "expired": "Expired"
+    },
+    "type": {
+      "project_approval": "Project Approval",
+      "parameter_change": "Parameter Change",
+      "emergency_pause": "Emergency Pause"
+    },
+    "quorum": {
+      "met": "Quorum Met",
+      "pending": "Quorum Pending"
+    },
+    "votes": {
+      "yes": "Yes",
+      "no": "No"
+    },
+    "participation": "Participation",
+    "approvalProgress": "Approval Progress",
+    "required": "required",
+    "created": "Created",
+    "project": "Project",
+    "vote": "Vote",
+    "endsAt": "Ends at",
+    "empty": {
+      "title": "No proposals found",
+      "description": "There are no proposals matching the selected filters.",
+      "clearFilters": "Clear Filters"
+    }
+  },
+  "modals": {
+    "deposit": {
+      "title": "Deposit Guarantee",
+      "selectToken": "Select Token",
+      "available": "Available",
+      "amount": "Amount",
+      "minimum": "Minimum",
+      "maximum": "Maximum",
+      "balance": "Balance",
+      "confirmTitle": "Confirm Deposit",
+      "confirmDescription": "Review your deposit details before confirming.",
+      "project": "Project",
+      "token": "Token",
+      "deposited": "Deposited",
+      "confirming": "Confirming...",
+      "confirm": "Confirm Deposit",
+      "warning": {
+        "title": "Important",
+        "description": "This deposit will be locked for 5 years as project guarantee."
+      },
+      "processing": {
+        "title": "Processing Deposit",
+        "description": "Your transaction is being processed on the blockchain.",
+        "note": "This may take a few minutes. Do not close this window."
+      },
+      "success": {
+        "title": "Deposit Completed",
+        "description": "Your deposit has been completed successfully!"
+      },
+      "errors": {
+        "invalidAmount": "Invalid amount",
+        "belowMinimum": "Below minimum of {{min}}",
+        "aboveMaximum": "Above maximum of {{max}}",
+        "insufficientBalance": "Insufficient balance",
+        "transactionFailed": "Transaction failed"
+      }
+    },
+    "vote": {
+      "title": "Vote on Proposal",
+      "endsAt": "Ends at",
+      "currentResults": "Current Results",
+      "alreadyVoted": "You have already voted on this proposal",
+      "yourVote": "Your vote",
+      "expired": "Voting Expired",
+      "expiredDescription": "The voting period for this proposal has ended.",
+      "castYourVote": "Cast Your Vote",
+      "approve": "Approve",
+      "reject": "Reject",
+      "votingPower": "Voting Power",
+      "available": "Available",
+      "proposal": "Proposal",
+      "confirmTitle": "Confirm Vote",
+      "confirmDescription": "Review your vote before confirming.",
+      "confirming": "Confirming...",
+      "confirm": "Confirm Vote",
+      "warning": {
+        "title": "Attention",
+        "description": "Your vote cannot be changed after confirmation."
+      },
+      "processing": {
+        "title": "Processing Vote",
+        "description": "Your vote is being recorded on the blockchain.",
+        "note": "This may take a few minutes. Do not close this window."
+      },
+      "success": {
+        "title": "Vote Recorded",
+        "description": "Your vote has been recorded successfully!"
+      },
+      "errors": {
+        "selectVote": "Select a voting option",
+        "invalidAmount": "Invalid voting power amount",
+        "transactionFailed": "Failed to record vote"
+      }
+    },
+    "claim": {
+      "title": "Claim Assets",
+      "status": {
+        "liquidated": "Project Liquidated",
+        "liquidatedDescription": "This project has been liquidated and you can claim your share of the vault.",
+        "completed": "Project Completed",
+        "completedDescription": "This project has been completed successfully.",
+        "paused": "Project Paused",
+        "pausedDescription": "This project has been paused by governance.",
+        "unknown": "Unknown Status",
+        "unknownDescription": "The status of this project could not be determined."
+      },
+      "liquidationDate": "Liquidation Date",
+      "yourHoldings": "Your Holdings",
+      "projectTokens": "Project Tokens",
+      "shareOfProject": "Share of Project",
+      "tokensToReturn": "Tokens to Return",
+      "useMax": "Use Max",
+      "claimableAssets": "Claimable Assets",
+      "ofVault": "of vault",
+      "notice": {
+        "title": "Important Notice",
+        "description": "By claiming, you return project tokens and receive your proportional share of the guarantee vault."
+      },
+      "confirmTitle": "Confirm Claim",
+      "confirmDescription": "Review your claim details.",
+      "project": "Project",
+      "returning": "Returning",
+      "youWillReceive": "You Will Receive",
+      "confirming": "Confirming...",
+      "confirm": "Confirm Claim",
+      "warning": {
+        "title": "Irreversible Action",
+        "description": "This action cannot be undone. Make sure of the amounts before confirming."
+      },
+      "processing": {
+        "title": "Processing Claim",
+        "description": "Your claim is being processed on the blockchain.",
+        "note": "This may take a few minutes. Do not close this window."
+      },
+      "success": {
+        "title": "Claim Completed",
+        "description": "Your claim has been processed successfully!"
+      },
+      "returned": "Returned",
+      "received": "Received",
+      "errors": {
+        "invalidAmount": "Invalid token amount",
+        "transactionFailed": "Claim transaction failed"
+      }
+    }
+  },
+  "footer": {
+    "terms": "Terms of Use",
+    "privacy": "Privacy",
+    "contact": "Contact",
+    "copyright": "© SafeGard - First decentralized guarantee protocol for Web3",
+    "legal": "Legal",
+    "cookies": "Cookie Policy",
+    "compliance": "Compliance",
+    "resources": "Resources",
+    "documentation": "Documentation",
+    "apiReference": "API Reference",
+    "support": "Support",
+    "technicalSupport": "Technical Support",
+    "faq": "FAQ",
+    "helpCenter": "Help Center",
+    "community": "Community",
+    "discord": "Discord",
+    "telegram": "Telegram",
+    "importantNotice": "Important Notice",
+    "allRightsReserved": "© {{year}} SafeGuard. All rights reserved.",
+    "tagline": "First decentralized guarantee protocol for Web3"
+  },
+  "home": {
+    "seo": {
+      "title": "SafeGuard - Decentralized Web3 Guarantee Protocol",
+      "description": "First decentralized guarantee protocol for Web3. More security and transparency for Lunes ecosystem investors."
+    },
+    "hero": {
+      "title": "The first decentralized guarantee protocol for Web3",
+      "subtitle": "More security and transparency for Lunes ecosystem investors. Segregated vaults, annual governance and a public Guarantee Score (0–100) auditable on-chain.",
+      "cta": {
+        "primary": "Explore Projects",
+        "secondary": "How It Works"
+      }
+    },
+    "stats": {
+      "totalLocked": "Total Locked",
+      "activeProtocols": "Active Protocols",
+      "avgApy": "Average APY"
+    },
+    "howItWorks": {
+      "title": "How It Works",
+      "description": "Understand the complete SafeGuard protocol process in three simple steps",
+      "learnMore": "Learn More",
+      "steps": {
+        "1": {
+          "title": "Connect Your Wallet",
+          "description": "Connect your Web3 wallet compatible with the Lunes network to start interacting with the protocol."
+        },
+        "2": {
+          "title": "Explore Projects",
+          "description": "Browse available projects, analyze their guarantee scores and security metrics."
+        },
+        "3": {
+          "title": "Invest Safely",
+          "description": "Make your investments knowing there's an additional layer of protection through the guarantee system."
+        }
+      }
+    },
+    "meta": {
+      "title": "SafeGard - First decentralized guarantee protocol for Web3",
+      "description": "More security and transparency for Lunes ecosystem investors. Segregated vaults, annual governance and public Guarantee Score (0–100) auditable on-chain."
+    },
+    "hero": {
+      "title": "The first decentralized guarantee protocol for Web3",
+      "subtitle": "More security and transparency for Lunes ecosystem investors. Segregated vaults, annual governance and public Guarantee Score (0–100) auditable on-chain.",
+      "ctaPrimary": "Explore Projects",
+      "cta": {
+        "secondary": "How It Works"
+      }
+    },
+    "stats": {
+      "totalGuarantees": "Total Guarantees",
+      "activeProjects": "Active Projects", 
+      "avgScore": "Average Score"
+    },
+    "howItWorks": {
+      "title": "How SafeGard Works",
+      "description": "A transparent and decentralized guarantee system for Web3 projects",
+      "steps": {
+        "1": {
+          "title": "Project Registration",
+          "description": "Projects deposit guarantees in segregated vaults with LUNES and other tokens"
+        },
+        "2": {
+          "title": "Community Governance",
+          "description": "Annual voting with high quorums (≥75%) and 60-day correction windows"
+        },
+        "3": {
+          "title": "Guarantee Score",
+          "description": "Public score (0-100) based on vault composition and project history"
+        }
+      }
+    },
+    "benefits": {
+      "title": "Investor benefits in the Lunes ecosystem",
+      "protection": "Protection layer: if a project is liquidated, you return the project token and claim your share of the vault per the rules.",
+      "transparency": "Radical transparency: Score 0–100 and vault metrics on-chain.",
+      "alignment": "Long-term alignment: 5-year lock reduces short-term opportunism.",
+      "quality": "Quality gate: High quorums (≥ 75% \"Yes\") + 60-day windows for course-correction.",
+      "comparability": "Comparability: a single standard to assess risk across projects.",
+      "discipline": "Execution discipline: annual governance + public event trail."
+    },
+    "metrics": {
+      "title": "Protocol Metrics",
+      "tvl": "Total TVL",
+      "activeProjects": "Active Projects",
+      "approvedLastCycle": "Approved Last Cycle",
+      "openClaims": "Open Claims Today"
+    },
+    "highlights": {
+      "title": "Currently Featured",
+      "voting": "Open Voting",
+      "approved": "Newly Approved",
+      "window": "In 60-day Window",
+      "viewAll": "View All Projects"
+    },
+    "disclaimer": {
+      "text": "On-chain protocol. Vault donations have no redemption. For claims, you must return the project token. Crypto carries high risk—you may lose part or all of your value. Not financial advice."
+    }
+  },
+  "projects": {
+    "title": "Choose with data—not hype",
+    "subtitle": "Filter by status, Score, vault size, and period. Compare apples to apples.",
+    "search": "Search by name or contract...",
+    "filters": {
+      "all": "All",
+      "status": "Status",
+      "score": "Score",
+      "guarantee": "Guarantee"
+    },
+    "card": {
+      "score": "Score",
+      "guarantee": "Total Backing",
+      "nextVoting": "Next Voting",
+      "daysLeft": "{days} days left",
+      "viewDetails": "View Details"
+    },
+    "empty": {
+      "title": "No projects found",
+      "description": "Try adjusting your filters or search."
+    }
+  },
+  "accessibility": {
+    "skipToContent": "Skip to main content",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "loading": "Loading content",
+    "error": "Error loading",
+    "success": "Operation completed successfully",
+    "warning": "Warning",
+    "info": "Information",
+    "breadcrumb": "Breadcrumb navigation",
+    "backToHome": "Back to homepage",
+    "navigateTo": "Navigate to {{destination}}"
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "Error loading data",
+    "retry": "Try Again",
+    "close": "Close",
+    "confirm": "Confirm",
+    "cancel": "Cancel",
+    "back": "Back",
+    "next": "Next",
+    "save": "Save",
+    "edit": "Edit",
+    "delete": "Delete",
+    "view": "View"
+  },
+  "score": {
+    "levels": {
+      "high": "High",
+      "moderate": "Moderate",
+      "low": "Low"
+    },
+    "description": {
+      "high": "Robust vault, consistent governance",
+      "moderate": "Evolving; monitor closely",
+      "low": "Young or weak vault"
+    },
+    "calculator": {
+      "title": "Score Calculator",
+      "subtitle": "Simulate your project's guarantee score based on the parameters below",
+      "card": {
+        "title": "Safeguard Score Simulator"
+      },
+      "totalSupply": "Total LUNES in Project",
+      "lockedSupply": "Locked LUNES",
+      "projectSize": "Project Size",
+      "burnRate": "Burn Rate",
+      "results": "Simulation Results",
+      "finalScore": "Final Score",
+      "componentScore": "Base Component",
+      "adjustmentFactor": "Adjustment Factor",
+      "percentageLocked": "Percentage Locked",
+      "reset": "Reset Values"
+    },
+    "meta": {
+      "title": "Guarantee Score - SafeGard | Transparent Scoring System",
+      "description": "Understand how SafeGard's Score v1.1 works: a transparent algorithm that evaluates projects from 0-100 based on LUNES guarantees, asset diversity, and burn progress."
+    },
+    "hero": {
+      "title": "Guarantee Score",
+      "subtitle": "Transparent and auditable system that evaluates project reliability based on deposited guarantees",
+      "badges": {
+        "transparent": "100% Transparent",
+        "realtime": "Real-Time",
+        "onchain": "On-Chain"
+      }
+    },
+    "ranges": {
+      "title": "Score Ranges",
+      "subtitle": "Understand what each score range represents for project reliability",
+      "excellent": {
+        "label": "Excellent",
+        "description": "Consolidated project with a robust and diversified vault"
+      },
+      "good": {
+        "label": "Good",
+        "description": "Established project with solid guarantees"
+      },
+      "fair": {
+        "label": "Fair",
+        "description": "Growing project with vault under development"
+      },
+      "low": {
+        "label": "Low",
+        "description": "Recent project or weak vault"
+      }
+    },
+    "components": {
+      "title": "Score Components",
+      "subtitle": "Score v1.1 is calculated based on two main components",
+      "formula": "Formula",
+      "maxPoints": "Max {{points}} points",
+      "lunes": {
+        "title": "LUNES Component",
+        "description": "Score based on the amount of LUNES tokens deposited (mandatory)",
+        "details": "LUNES is mandatory for any score. The calculation considers burn progress and project size to dynamically adjust requirements."
+      },
+      "other": {
+        "title": "Other Assets",
+        "description": "Additional score for PSP22 tokens and NFTs with haircuts applied",
+        "details": "PSP22 tokens have a 90% haircut, NFTs have a 50% haircut. Contribution limited to 5 points to encourage focus on LUNES."
+      }
+    },
+    "factors": {
+      "title": "Adjustment Factors",
+      "subtitle": "Elements that dynamically influence the score calculation",
+      "burn": {
+        "title": "Burn Progress",
+        "description": "Reduces requirements as LUNES tokens are burned from supply"
+      },
+      "project": {
+        "title": "Project Size",
+        "description": "Larger projects require proportionally more guarantees"
+      },
+      "temporal": {
+        "title": "Temporal Adjustment",
+        "description": "Combines burn progress with the project's base requirements"
+      }
+    },
+    "examples": {
+      "title": "Practical Examples",
+      "subtitle": "See how different scenarios result in different scores",
+      "lunesAmount": "LUNES Deposited",
+      "otherAssets": "Other Assets",
+      "burnProgress": "Burn Progress",
+      "totalSupply": "Total Supply",
+      "locked": "Locked",
+      "percentage": "Percentage",
+      "nft": {"description": "Project with NFTs and additional tokens increasing the score"},
+      "staking": {"description": "Project with LUNES locked in staking increasing reliability"},
+      "new": {"description": "New project with initial guarantees, evolving score"}
+    },
+    "cta": {
+      "title": "Explore Projects by Score",
+      "description": "Use the Guarantee Score to make informed decisions about projects in the Lunes ecosystem",
+      "primary": "View Rankings",
+      "secondary": "Calculate Score"
+    }
+  },
+  "status": {
+    "in_lock": "In Lock",
+    "voting_open": "Voting Open",
+    "correction_window": "Correction Window",
+    "liquidation": "Liquidation",
+    "claims_open": "Claims Open",
+    "completed": "Completed"
+  }
+}

@@ -1,0 +1,274 @@
+{
+  "nav": {
+    "home": "Inicio",
+    "projects": "Proyectos",
+    "howItWorks": "Cómo Funciona",
+    "score": "Score de Garantía",
+    "governance": "Gobernanza",
+    "blog": "Blog",
+    "faq": "FAQ",
+    "adminAccess": "Acceso Admin"
+  },
+  "footer": {
+    "terms": "Términos de Uso",
+    "privacy": "Privacidad",
+    "contact": "Contacto",
+    "copyright": "© SafeGard - Primer protocolo descentralizado de garantías para Web3",
+    "legal": "Legal",
+    "cookies": "Política de Cookies",
+    "compliance": "Cumplimiento",
+    "resources": "Recursos",
+    "documentation": "Documentación",
+    "apiReference": "Referencia API",
+    "support": "Soporte",
+    "technicalSupport": "Soporte Técnico",
+    "faq": "FAQ",
+    "helpCenter": "Centro de Ayuda",
+    "community": "Comunidad",
+    "discord": "Discord",
+    "telegram": "Telegram",
+    "importantNotice": "Aviso Importante",
+    "allRightsReserved": "© {{year}} SafeGuard. Todos los derechos reservados.",
+    "tagline": "Primer protocolo descentralizado de garantías para Web3"
+  },
+  "home": {
+    "seo": {
+      "title": "SafeGuard - Protocolo Descentralizado de Garantías Web3",
+      "description": "Primer protocolo descentralizado de garantías para Web3. Más seguridad y transparencia para inversores del ecosistema Lunes."
+    },
+    "hero": {
+      "title": "El primer protocolo descentralizado de garantías para Web3",
+      "subtitle": "Más seguridad y transparencia para inversores del ecosistema Lunes. Bóvedas segregadas, gobernanza anual y un Score de Garantía (0–100) público y auditable on-chain.",
+      "cta": {
+        "primary": "Explorar Proyectos",
+        "secondary": "Cómo Funciona"
+      }
+    },
+    "stats": {
+      "totalLocked": "Total Bloqueado",
+      "activeProtocols": "Protocolos Activos",
+      "avgApy": "APY Promedio"
+    },
+    "howItWorks": {
+      "title": "Cómo Funciona",
+      "description": "Entiende el proceso completo del protocolo SafeGuard en tres pasos simples",
+      "learnMore": "Saber Más",
+      "steps": {
+        "1": {
+          "title": "Conecta tu Billetera",
+          "description": "Conecta tu billetera Web3 compatible con la red Lunes para comenzar a interactuar con el protocolo."
+        },
+        "2": {
+          "title": "Explora Proyectos",
+          "description": "Navega por los proyectos disponibles, analiza sus scores de garantía y métricas de seguridad."
+        },
+        "3": {
+          "title": "Invierte con Seguridad",
+          "description": "Realiza tus inversiones sabiendo que hay una capa adicional de protección a través del sistema de garantías."
+        }
+      }
+    },
+    "hero": {
+      "title": "El primer protocolo descentralizado de garantías para proyectos Web3",
+      "subtitle": "Más seguridad y transparencia para inversores del ecosistema Lunes. Cofres segregados, gobernanza anual y Score de Garantía (0–100) público y on-chain.",
+      "ctaPrimary": "Explorar Proyectos",
+      "ctaSecondary": "Cómo Funciona"
+    },
+    "benefits": {
+      "title": "Beneficios para quien invierte en el ecosistema Lunes",
+      "protection": "Capa de protección: si hay liquidación, devuelves el token del proyecto y reclamas tu parte del cofre según reglas.",
+      "transparency": "Transparencia radical: Score 0–100 y métricas de cofre on-chain.",
+      "alignment": "Alineación a largo plazo: lock de 5 años reduce el cortoplacismo.",
+      "quality": "Filtro de calidad: quórums altos (≥ 75% \"Sí\") + ventanas de 60 días para correcciones.",
+      "comparability": "Comparabilidad: un estándar único para evaluar riesgo entre proyectos.",
+      "discipline": "Disciplina de ejecución: gobernanza anual + historial público de eventos."
+    },
+    "metrics": {
+      "title": "Métricas del Protocolo",
+      "tvl": "TVL Total",
+      "activeProjects": "Proyectos Activos",
+      "approvedLastCycle": "Aprobados en el Último Ciclo",
+      "openClaims": "Claims Abiertos Hoy"
+    },
+    "highlights": {
+      "title": "En Foco Ahora",
+      "voting": "Votación Abierta",
+      "approved": "Recién Aprobados",
+      "window": "En Ventana de 60 Días",
+      "viewAll": "Ver Todos los Proyectos"
+    },
+    "disclaimer": {
+      "text": "Protocolo on-chain. Las donaciones al cofre no tienen rescate. Para claims, debes devolver el token del proyecto. Cripto conlleva alto riesgo—puedes perder parte o todo tu valor. No es asesoramiento financiero."
+    }
+  },
+  "projects": {
+    "title": "Elige con datos—no con hype",
+    "subtitle": "Filtra por estado, Score, tamaño del cofre y período. Compara en igualdad de condiciones.",
+    "search": "Buscar por nombre o contrato...",
+    "filters": {
+      "all": "Todos",
+      "status": "Estado",
+      "score": "Score",
+      "guarantee": "Garantía"
+    },
+    "card": {
+      "score": "Score",
+      "guarantee": "Respaldo Total",
+      "nextVoting": "Próxima Votación",
+      "daysLeft": "faltan {days} días",
+      "viewDetails": "Ver Detalles"
+    },
+    "empty": {
+      "title": "No se encontraron proyectos",
+      "description": "Intenta ajustar los filtros o búsqueda."
+    }
+  },
+  "common": {
+    "loading": "Cargando...",
+    "error": "Error al cargar datos",
+    "retry": "Intentar de Nuevo",
+    "close": "Cerrar",
+    "confirm": "Confirmar",
+    "cancel": "Cancelar",
+    "back": "Atrás",
+    "next": "Siguiente",
+    "save": "Guardar",
+    "edit": "Editar",
+    "delete": "Eliminar",
+    "view": "Ver"
+  },
+  "score": {
+    "levels": {
+      "high": "Alto",
+      "moderate": "Moderado",
+      "low": "Bajo"
+    },
+    "description": {
+      "high": "Cofre robusto, gobernanza consistente",
+      "moderate": "En evolución; requiere seguimiento",
+      "low": "Proyecto joven o cofre débil"
+    },
+    "calculator": {
+      "title": "Calculadora de Score",
+      "subtitle": "Simula el score de garantía de tu proyecto según los parámetros abajo",
+      "card": {
+        "title": "Simulador de Score Safeguard"
+      },
+      "totalSupply": "Total de LUNES del Proyecto",
+      "lockedSupply": "LUNES Bloqueados",
+      "projectSize": "Tamaño del Proyecto",
+      "burnRate": "Tasa de Quema",
+      "results": "Resultados de la Simulación",
+      "finalScore": "Score Final",
+      "componentScore": "Componente Base",
+      "adjustmentFactor": "Factor de Ajuste",
+      "percentageLocked": "Porcentaje Bloqueado",
+      "reset": "Restablecer Valores"
+    },
+    "meta": {
+      "title": "Score de Garantía - SafeGard | Sistema de Puntuación Transparente",
+      "description": "Entiende cómo funciona el Score v1.1 de SafeGard: un algoritmo transparente que evalúa proyectos de 0-100 basado en garantías LUNES, diversidad de activos y progreso de quema."
+    },
+    "hero": {
+      "title": "Score de Garantía",
+      "subtitle": "Sistema transparente y auditable que evalúa la confiabilidad de proyectos basado en garantías depositadas",
+      "badges": {
+        "transparent": "100% Transparente",
+        "realtime": "Tiempo Real",
+        "onchain": "On-Chain"
+      }
+    },
+    "ranges": {
+      "title": "Rangos de Puntuación",
+      "subtitle": "Entiende lo que cada rango de score representa para la confiabilidad del proyecto",
+      "excellent": {
+        "label": "Excelente",
+        "description": "Proyecto consolidado con cofre robusto y diversificado"
+      },
+      "good": {
+        "label": "Bueno",
+        "description": "Proyecto establecido con garantías sólidas"
+      },
+      "fair": {
+        "label": "Regular",
+        "description": "Proyecto en crecimiento con cofre en desarrollo"
+      },
+      "low": {
+        "label": "Bajo",
+        "description": "Proyecto reciente o cofre débil"
+      }
+    },
+    "components": {
+      "title": "Componentes del Score",
+      "subtitle": "El Score v1.1 se calcula en base a dos componentes principales",
+      "formula": "Fórmula",
+      "maxPoints": "Máx. {{points}} puntos",
+      "lunes": {
+        "title": "Componente LUNES",
+        "description": "Puntuación basada en la cantidad de tokens LUNES depositados (obligatorio)",
+        "details": "LUNES es obligatorio para cualquier puntuación. El cálculo considera el progreso de quema y el tamaño del proyecto para ajustar dinámicamente los requisitos."
+      },
+      "other": {
+        "title": "Otros Activos",
+        "description": "Puntuación adicional por tokens PSP22 y NFTs con haircuts aplicados",
+        "details": "Los tokens PSP22 tienen un haircut del 90%, los NFTs tienen un haircut del 50%. Contribución limitada a 5 puntos para incentivar el enfoque en LUNES."
+      }
+    },
+    "factors": {
+      "title": "Factores de Ajuste",
+      "subtitle": "Elementos que influyen dinámicamente en el cálculo del score",
+      "burn": {
+        "title": "Progreso de Quema",
+        "description": "Reduce requisitos a medida que se queman tokens LUNES del suministro"
+      },
+      "project": {
+        "title": "Tamaño del Proyecto",
+        "description": "Proyectos más grandes requieren más garantías proporcionalmente"
+      },
+      "temporal": {
+        "title": "Ajuste Temporal",
+        "description": "Combina progreso de quema con los requisitos base del proyecto"
+      }
+    },
+    "examples": {
+      "title": "Ejemplos Prácticos",
+      "subtitle": "Mira cómo diferentes escenarios resultan en puntajes distintos",
+      "lunesAmount": "LUNES Depositados",
+      "otherAssets": "Otros Activos",
+      "burnProgress": "Progreso de Quema",
+      "totalSupply": "Suministro Total",
+      "locked": "Bloqueado",
+      "percentage": "Porcentaje",
+      "nft": {"description": "Proyecto con NFTs y tokens adicionales aumentando el score"},
+      "staking": {"description": "Proyecto con LUNES bloqueados en staking aumentando confiabilidad"},
+      "new": {"description": "Proyecto nuevo con garantías iniciales, score en evolución"}
+    },
+    "cta": {
+      "title": "Explora Proyectos por Score",
+      "description": "Usa el Score de Garantía para tomar decisiones informadas sobre proyectos en el ecosistema Lunes",
+      "primary": "Ver Rankings",
+      "secondary": "Calcular Score"
+    }
+  },
+  "status": {
+    "in_lock": "En Lock",
+    "voting_open": "Votación Abierta",
+    "correction_window": "Ventana de Corrección",
+    "liquidation": "Liquidación",
+    "claims_open": "Claims Abiertos",
+    "completed": "Finalizado"
+  },
+  "accessibility": {
+    "skipToContent": "Saltar al contenido principal",
+    "openMenu": "Abrir menú",
+    "closeMenu": "Cerrar menú",
+    "loading": "Cargando contenido",
+    "error": "Error al cargar",
+    "success": "Operación completada con éxito",
+    "warning": "Advertencia",
+    "info": "Información",
+    "breadcrumb": "Navegación estructural",
+    "backToHome": "Volver al inicio",
+    "navigateTo": "Navegar a {{destination}}"
+  }
+}

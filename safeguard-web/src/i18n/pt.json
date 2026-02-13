@@ -1,0 +1,623 @@
+{
+  "nav": {
+    "home": "Início",
+    "projects": "Projetos",
+    "howItWorks": "Como Funciona",
+    "score": "Score de Garantia",
+    "governance": "Governança",
+    "blog": "Blog",
+    "faq": "FAQ",
+    "adminAccess": "Adicionar Garantia"
+  },
+  "governance": {
+    "meta": {
+      "title": "Governança - Votações e Propostas",
+      "description": "Participe da governança descentralizada do SafeGard. Vote em propostas, aprove projetos e ajude a moldar o futuro do protocolo."
+    },
+    "hero": {
+      "title": "Governança",
+      "subtitle": "Participe das decisões que moldam o futuro do SafeGard. Votação descentralizada, transparente e auditável on-chain."
+    },
+    "stats": {
+      "activeVotes": "Votações Ativas",
+      "quorumRequired": "Quórum Necessário",
+      "votingPeriod": "Dias de Votação"
+    },
+    "filters": {
+      "search": "Buscar propostas...",
+      "allStatus": "Todos os Status",
+      "active": "Ativo",
+      "passed": "Aprovado",
+      "rejected": "Rejeitado",
+      "expired": "Expirado",
+      "allTypes": "Todos os Tipos",
+      "projectApproval": "Aprovação de Projeto",
+      "parameterChange": "Mudança de Parâmetros",
+      "emergencyPause": "Pausa de Emergência",
+      "results": "resultados"
+    },
+    "status": {
+      "active": "Ativo",
+      "passed": "Aprovado",
+      "rejected": "Rejeitado",
+      "expired": "Expirado"
+    },
+    "type": {
+      "project_approval": "Aprovação de Projeto",
+      "parameter_change": "Mudança de Parâmetros",
+      "emergency_pause": "Pausa de Emergência"
+    },
+    "quorum": {
+      "met": "Quórum Atingido",
+      "pending": "Quórum Pendente"
+    },
+    "votes": {
+      "yes": "Sim",
+      "no": "Não"
+    },
+    "participation": "Participação",
+    "approvalProgress": "Progresso de Aprovação",
+    "required": "necessário",
+    "created": "Criado",
+    "project": "Projeto",
+    "vote": "Votar",
+    "endsAt": "Termina em",
+    "empty": {
+      "title": "Nenhuma proposta encontrada",
+      "description": "Não há propostas que correspondam aos filtros selecionados.",
+      "clearFilters": "Limpar Filtros"
+    }
+  },
+  "modals": {
+    "deposit": {
+      "title": "Depositar Garantia",
+      "selectToken": "Selecionar Token",
+      "available": "Disponível",
+      "amount": "Quantidade",
+      "minimum": "Mínimo",
+      "maximum": "Máximo",
+      "balance": "Saldo",
+      "confirmTitle": "Confirmar Depósito",
+      "confirmDescription": "Revise os detalhes do seu depósito antes de confirmar.",
+      "project": "Projeto",
+      "token": "Token",
+      "deposited": "Depositado",
+      "confirming": "Confirmando...",
+      "confirm": "Confirmar Depósito",
+      "warning": {
+        "title": "Importante",
+        "description": "Este depósito será bloqueado por 5 anos como garantia do projeto."
+      },
+      "processing": {
+        "title": "Processando Depósito",
+        "description": "Sua transação está sendo processada na blockchain.",
+        "note": "Isso pode levar alguns minutos. Não feche esta janela."
+      },
+      "success": {
+        "title": "Depósito Realizado",
+        "description": "Seu depósito foi realizado com sucesso!"
+      },
+      "errors": {
+        "invalidAmount": "Quantidade inválida",
+        "belowMinimum": "Abaixo do mínimo de {{min}}",
+        "aboveMaximum": "Acima do máximo de {{max}}",
+        "insufficientBalance": "Saldo insuficiente",
+        "transactionFailed": "Falha na transação"
+      }
+    },
+    "vote": {
+      "title": "Votar na Proposta",
+      "endsAt": "Termina em",
+      "currentResults": "Resultados Atuais",
+      "alreadyVoted": "Você já votou nesta proposta",
+      "yourVote": "Seu voto",
+      "expired": "Votação Expirada",
+      "expiredDescription": "O período de votação desta proposta já terminou.",
+      "castYourVote": "Registre seu Voto",
+      "approve": "Aprovar",
+      "reject": "Rejeitar",
+      "votingPower": "Poder de Voto",
+      "available": "Disponível",
+      "proposal": "Proposta",
+      "confirmTitle": "Confirmar Voto",
+      "confirmDescription": "Revise seu voto antes de confirmar.",
+      "confirming": "Confirmando...",
+      "confirm": "Confirmar Voto",
+      "warning": {
+        "title": "Atenção",
+        "description": "Seu voto não pode ser alterado após a confirmação."
+      },
+      "processing": {
+        "title": "Processando Voto",
+        "description": "Seu voto está sendo registrado na blockchain.",
+        "note": "Isso pode levar alguns minutos. Não feche esta janela."
+      },
+      "success": {
+        "title": "Voto Registrado",
+        "description": "Seu voto foi registrado com sucesso!"
+      },
+      "errors": {
+        "selectVote": "Selecione uma opção de voto",
+        "invalidAmount": "Quantidade inválida de poder de voto",
+        "transactionFailed": "Falha ao registrar voto"
+      }
+    },
+    "claim": {
+      "title": "Reivindicar Ativos",
+      "status": {
+        "liquidated": "Projeto Liquidado",
+        "liquidatedDescription": "Este projeto foi liquidado e você pode reivindicar sua parte do cofre.",
+        "completed": "Projeto Concluído",
+        "completedDescription": "Este projeto foi concluído com sucesso.",
+        "paused": "Projeto Pausado",
+        "pausedDescription": "Este projeto foi pausado pela governança.",
+        "unknown": "Status Desconhecido",
+        "unknownDescription": "O status deste projeto não pôde ser determinado."
+      },
+      "liquidationDate": "Data de Liquidação",
+      "yourHoldings": "Suas Participações",
+      "projectTokens": "Tokens do Projeto",
+      "shareOfProject": "Participação no Projeto",
+      "tokensToReturn": "Tokens a Devolver",
+      "useMax": "Usar Máximo",
+      "claimableAssets": "Ativos Reivindicáveis",
+      "ofVault": "do cofre",
+      "notice": {
+        "title": "Aviso Importante",
+        "description": "Ao reivindicar, você devolve os tokens do projeto e recebe sua parte proporcional do cofre de garantias."
+      },
+      "confirmTitle": "Confirmar Reivindicação",
+      "confirmDescription": "Revise os detalhes da sua reivindicação.",
+      "project": "Projeto",
+      "returning": "Devolvendo",
+      "youWillReceive": "Você Receberá",
+      "confirming": "Confirmando...",
+      "confirm": "Confirmar Reivindicação",
+      "warning": {
+        "title": "Ação Irreversível",
+        "description": "Esta ação não pode ser desfeita. Certifique-se dos valores antes de confirmar."
+      },
+      "processing": {
+        "title": "Processando Reivindicação",
+        "description": "Sua reivindicação está sendo processada na blockchain.",
+        "note": "Isso pode levar alguns minutos. Não feche esta janela."
+      },
+      "success": {
+        "title": "Reivindicação Realizada",
+        "description": "Sua reivindicação foi processada com sucesso!"
+      },
+      "returned": "Devolvido",
+      "received": "Recebido",
+      "errors": {
+        "invalidAmount": "Quantidade inválida de tokens",
+        "transactionFailed": "Falha na transação de reivindicação"
+      }
+    }
+  },
+  "footer": {
+    "terms": "Termos de Uso",
+    "privacy": "Privacidade",
+    "contact": "Contato",
+    "copyright": "© SafeGard - Primeiro protocolo descentralizado de garantias para Web3",
+    "legal": "Legal",
+    "cookies": "Política de Cookies",
+    "compliance": "Compliance",
+    "resources": "Recursos",
+    "documentation": "Documentação",
+    "apiReference": "API Reference",
+    "support": "Suporte",
+    "technicalSupport": "Suporte Técnico",
+    "faq": "FAQ",
+    "helpCenter": "Central de Ajuda",
+    "community": "Comunidade",
+    "discord": "Discord",
+    "telegram": "Telegram",
+    "importantNotice": "Aviso Importante",
+    "allRightsReserved": "© {{year}} SafeGuard. Todos os direitos reservados.",
+    "tagline": "Primeiro protocolo descentralizado de garantias para Web3"
+  },
+  "home": {
+    "seo": {
+      "title": "SafeGuard - Protocolo Descentralizado de Garantias Web3",
+      "description": "Primeiro protocolo descentralizado de garantias para Web3. Mais segurança e transparência para investidores do ecossistema Lunes."
+    },
+    "hero": {
+      "title": "O primeiro protocolo descentralizado de garantias para Web3",
+      "subtitle": "Mais segurança e transparência para investidores do ecossistema Lunes. Cofres segregados, governança anual e um Score de Garantia (0–100) público e auditável on-chain.",
+      "ctaPrimary": "Explorar Projetos",
+      "cta": {
+        "primary": "Explorar Projetos",
+        "secondary": "Como Funciona"
+      }
+    },
+    "stats": {
+      "totalLocked": "Total Bloqueado",
+      "activeProtocols": "Protocolos Ativos",
+      "avgApy": "APY Médio"
+    },
+    "howItWorks": {
+      "title": "Como Funciona",
+      "description": "Entenda o processo completo do protocolo SafeGuard em três etapas simples",
+      "learnMore": "Saiba Mais",
+      "steps": {
+        "1": {
+          "title": "Conecte sua Carteira",
+          "description": "Conecte sua carteira Web3 compatível com a rede Lunes para começar a interagir com o protocolo."
+        },
+        "2": {
+          "title": "Explore Projetos",
+          "description": "Navegue pelos projetos disponíveis, analise seus scores de garantia e métricas de segurança."
+        },
+        "3": {
+          "title": "Invista com Segurança",
+          "description": "Faça seus investimentos sabendo que há uma camada adicional de proteção através do sistema de garantias."
+        }
+      }
+    },
+    "benefits": {
+      "title": "Benefícios para quem investe no ecossistema Lunes",
+      "protection": "Camada de proteção: se um projeto entra em liquidação, você devolve o token e reivindica sua parcela do cofre conforme regras.",
+      "transparency": "Transparência radical: Score 0–100 e métricas de cofre on-chain — sem caixas-pretas.",
+      "alignment": "Alinhamento de longo prazo: lock de 5 anos minimiza decisões oportunistas.",
+      "quality": "Qualidade na entrada: quóruns altos (≥ 75% \"Sim\") e janelas de 60 dias para corrigir rota.",
+      "comparability": "Comparabilidade: um padrão único para avaliar riscos entre projetos.",
+      "discipline": "Disciplina de execução: governança anual + trilha pública de eventos."
+    },
+    "metrics": {
+      "title": "Métricas do Protocolo",
+      "tvl": "TVL Total",
+      "activeProjects": "Projetos Ativos",
+      "approvedLastCycle": "Aprovados no Último Ciclo",
+      "openClaims": "Claims Abertos Hoje"
+    },
+    "highlights": {
+      "title": "Em Foco Agora",
+      "voting": "Em Votação",
+      "approved": "Recém-aprovados",
+      "window": "Em Janela de 60 Dias",
+      "viewAll": "Ver Todos os Projetos"
+    },
+    "disclaimer": {
+      "text": "SafeGard é on-chain. Doações ao cofre não têm resgate. Para claims, é necessário devolver o token do projeto. Cripto envolve alto risco — você pode perder parte ou todo o valor. Isto não é recomendação financeira."
+    }
+  },
+  "projectsOld": {
+    "title": "Escolha com dados — não com hype",
+    "subtitle": "Filtre por status, Score, tamanho do cofre e período. Compare projetos com critérios iguais para todos.",
+    "search": "Buscar por nome ou contrato...",
+    "filters": {
+      "all": "Todos",
+      "status": "Status",
+      "score": "Score",
+      "learnMore": "Saiba Mais"
+    },
+    "card": {
+      "score": "Score",
+      "guarantee": "Garantia Total",
+      "nextVoting": "Próxima Votação",
+      "daysLeft": "faltam {days} dias",
+      "viewDetails": "Ver Detalhes"
+    },
+    "empty": {
+      "title": "Nenhum projeto encontrado",
+      "description": "Tente ajustar os filtros ou busca."
+    }
+  },
+  "accessibility": {
+    "skipToContent": "Pular para o conteúdo principal",
+    "openMenu": "Abrir menu",
+    "closeMenu": "Fechar menu",
+    "loading": "Carregando conteúdo",
+    "error": "Erro ao carregar",
+    "success": "Operação realizada com sucesso",
+    "warning": "Atenção",
+    "info": "Informação",
+    "breadcrumb": "Navegação estrutural",
+    "backToHome": "Voltar para página inicial",
+    "navigateTo": "Navegar para {{destination}}"
+  },
+  "common": {
+    "loading": "Carregando...",
+    "error": "Erro ao carregar dados",
+    "retry": "Tentar Novamente",
+    "close": "Fechar",
+    "confirm": "Confirmar",
+    "cancel": "Cancelar",
+    "back": "Voltar",
+    "next": "Próximo",
+    "save": "Salvar",
+    "edit": "Editar",
+    "delete": "Excluir",
+    "view": "Visualizar"
+  },
+  "scoreOld": {
+    "levels": {
+      "high": "Alto",
+      "moderate": "Moderado",
+      "low": "Baixo"
+    },
+    "description": {
+      "high": "Projeto consolidado com cofre robusto e diversificado",
+      "moderate": "Projeto estabelecido com garantias sólidas",
+      "low": "Projeto recente ou com cofre frágil"
+    }
+  },
+  "status": {
+    "in_lock": "Em Lock",
+    "voting_open": "Votação Aberta",
+    "correction_window": "Janela de Correção",
+    "liquidation": "Liquidação",
+    "claims_open": "Claims Abertos",
+    "completed": "Finalizado"
+  },
+  "howItWorks": {
+    "meta": {
+      "title": "Como Funciona - SafeGard | Protocolo de Garantias Descentralizado",
+      "description": "Entenda como o SafeGard funciona: cofres segregados, governança comunitária, scoring transparente e vesting de 5 anos para máxima segurança."
+    },
+    "hero": {
+      "title": "Como Funciona o SafeGard",
+      "subtitle": "Descubra como nosso protocolo descentralizado oferece garantias transparentes e seguras para projetos Web3",
+      "badge": "Protocolo Descentralizado"
+    },
+    "process": {
+      "title": "Processo Passo a Passo",
+      "subtitle": "Entenda como funciona cada etapa do protocolo SafeGard"
+    },
+    "steps": {
+      "1": {
+        "title": "Criação do Projeto",
+        "description": "Projetos são registrados no protocolo com informações básicas",
+        "details": "Cada projeto é criado com timestamp on-chain, iniciando o período de vesting de 5 anos. Informações como nome, descrição e categoria são armazenadas de forma imutável."
+      },
+      "2": {
+        "title": "Depósito de Garantias",
+        "description": "Comunidade deposita tokens LUNES e outros ativos como garantia",
+        "details": "Investidores podem depositar LUNES, tokens PSP22 e NFTs como garantia. Todos os ativos ficam em cofres segregados e são contabilizados para o Score de Garantia."
+      },
+      "3": {
+        "title": "Cálculo do Score",
+        "description": "Score de 0-100 calculado automaticamente baseado nas garantias",
+        "details": "O Score v1.1 considera valor em LUNES (obrigatório), diversidade de ativos, tempo de vesting e queima de tokens. Cálculo transparente e auditável on-chain."
+      },
+      "4": {
+        "title": "Governança Anual",
+        "description": "Comunidade vota anualmente sobre liberação de garantias",
+        "details": "Após 5 anos de vesting, a comunidade pode votar para liberar garantias. Votação descentralizada com período de 7 dias e transparência total."
+      },
+      "5": {
+        "title": "Cofres Segregados",
+        "description": "Garantias ficam protegidas em cofres individuais por projeto",
+        "details": "Cada projeto possui seu próprio cofre segregado. Garantias não podem ser misturadas entre projetos, garantindo isolamento total de riscos."
+      }
+    },
+    "benefits": {
+      "title": "Benefícios do SafeGard",
+      "subtitle": "Por que escolher nosso protocolo de garantias descentralizado",
+      "transparency": {
+        "title": "Transparência Total",
+        "description": "Todas as transações e scores são públicos e auditáveis on-chain"
+      },
+      "security": {
+        "title": "Máxima Segurança",
+        "description": "Cofres segregados e vesting de 5 anos protegem investidores"
+      },
+      "governance": {
+        "title": "Governança Descentralizada",
+        "description": "Comunidade decide sobre liberação de garantias através de votação"
+      },
+      "scoring": {
+        "title": "Score Inteligente",
+        "description": "Algoritmo sofisticado avalia confiabilidade baseado em múltiplos fatores"
+      }
+    },
+    "cta": {
+      "title": "Pronto para Começar?",
+      "description": "Explore projetos com garantias ou deposite seus tokens para apoiar o ecossistema Lunes",
+      "primary": "Ver Projetos",
+      "secondary": "Depositar Garantia"
+    }
+  },
+  "score": {
+    "meta": {
+      "title": "Score de Garantia - SafeGard | Sistema de Pontuação Transparente",
+      "description": "Entenda como funciona o Score v1.1 do SafeGard: algoritmo transparente que avalia projetos de 0-100 baseado em garantias LUNES, diversidade de ativos e progresso de queima."
+    },
+    "hero": {
+      "title": "Score de Garantia",
+      "subtitle": "Sistema transparente e auditável que avalia a confiabilidade de projetos baseado em suas garantias depositadas",
+      "badges": {
+        "transparent": "100% Transparente",
+        "realtime": "Tempo Real",
+        "onchain": "On-Chain"
+      }
+    },
+    "calculator": {
+      "title": "Calculadora de Score",
+      "subtitle": "Simule o score de garantia do seu projeto com base nos parâmetros abaixo",
+      "card": {
+        "title": "Simulador de Score Safeguard"
+      },
+      "totalSupply": "Total de LUNES no Projeto",
+      "lockedSupply": "LUNES Bloqueados",
+      "projectSize": "Tamanho do Projeto",
+      "burnRate": "Taxa de Queima",
+      "results": "Resultados da Simulação",
+      "finalScore": "Score Final",
+      "componentScore": "Componente Base",
+      "adjustmentFactor": "Fator de Ajuste",
+      "percentageLocked": "Percentual Bloqueado",
+      "reset": "Resetar Valores"
+    },
+    "ranges": {
+      "title": "Faixas de Pontuação",
+      "subtitle": "Entenda o que cada faixa de score representa para a confiabilidade do projeto",
+      "excellent": {
+        "label": "Excelente",
+        "description": "Projeto consolidado com cofre robusto e diversificado"
+      },
+      "good": {
+        "label": "Bom",
+        "description": "Projeto estabelecido com garantias sólidas"
+      },
+      "fair": {
+        "label": "Regular",
+        "description": "Projeto em crescimento com cofre em desenvolvimento"
+      },
+      "low": {
+        "label": "Baixo",
+        "description": "Projeto recente ou com cofre frágil"
+      }
+    },
+    "components": {
+      "title": "Componentes do Score",
+      "subtitle": "O Score v1.1 é calculado com base em dois componentes principais",
+      "formula": "Fórmula",
+      "maxPoints": "Máx. {{points}} pontos",
+      "lunes": {
+        "title": "Componente LUNES",
+        "description": "Pontuação baseada na quantidade de tokens LUNES depositados (obrigatório)",
+        "details": "LUNES é obrigatório para qualquer pontuação. O cálculo considera o progresso de queima e tamanho do projeto para ajustar dinamicamente os requisitos."
+      },
+      "other": {
+        "title": "Outros Ativos",
+        "description": "Pontuação adicional por tokens PSP22 e NFTs com haircuts aplicados",
+        "details": "Tokens PSP22 têm haircut de 90%, NFTs têm haircut de 50%. Contribuição limitada a 5 pontos para incentivar foco em LUNES."
+      }
+    },
+    "factors": {
+      "title": "Fatores de Ajuste",
+      "subtitle": "Elementos que influenciam dinamicamente o cálculo do score",
+      "burn": {
+        "title": "Progresso de Queima",
+        "description": "Reduz requisitos conforme tokens LUNES são queimados do supply"
+      },
+      "project": {
+        "title": "Tamanho do Projeto",
+        "description": "Projetos maiores precisam de mais garantias proporcionalmente"
+      },
+      "temporal": {
+        "title": "Ajuste Temporal",
+        "description": "Combina progresso de queima com requisitos base do projeto"
+      }
+    },
+    "examples": {
+      "title": "Exemplos Práticos",
+      "subtitle": "Veja como diferentes cenários resultam em scores distintos",
+      "lunesAmount": "LUNES Depositados",
+      "otherAssets": "Outros Ativos",
+      "burnProgress": "Progresso Queima",
+      "totalSupply": "Supply Total",
+      "locked": "Bloqueado",
+      "percentage": "Percentual",
+      "nft": {"description": "Projeto com NFTs e tokens adicionais aumentando o score"},
+      "staking": {"description": "Projeto com LUNES bloqueados em staking aumentando confiabilidade"},
+      "new": {"description": "Projeto novo com garantias iniciais, score em evolução"},
+      "high": {
+        "explanation": "Score alto devido ao grande volume de LUNES e ativos diversificados"
+      },
+      "medium": {
+        "explanation": "Score médio com boa quantidade de LUNES mas menos diversificação"
+      },
+      "low": {
+        "explanation": "Score baixo por estar próximo ao mínimo de LUNES exigido"
+      }
+    },
+    "cta": {
+      "title": "Explore Projetos por Score",
+      "description": "Use o Score de Garantia para tomar decisões informadas sobre projetos no ecossistema Lunes",
+      "primary": "Ver Rankings",
+      "secondary": "Calcular Score"
+    }
+  },
+  "projects": {
+    "meta": {
+      "title": "Projetos - SafeGard | Explore Projetos com Garantias",
+      "description": "Explore todos os projetos do ecossistema Lunes com garantias depositadas. Filtre por score, categoria, status e valor de garantia."
+    },
+    "hero": {
+      "title": "Projetos SafeGard",
+      "subtitle": "Escolha com dados — não com hype. Filtre por status, Score, tamanho do cofre e período.",
+      "projectsFound": "projetos encontrados",
+      "totalGuarantees": "em garantias totais"
+    },
+    "search": {
+      "placeholder": "Buscar por nome, descrição ou contrato..."
+    },
+    "filters": {
+      "status": {
+        "all": "Todos os Status",
+        "active": "Ativo",
+        "voting": "Em Votação",
+        "completed": "Finalizado"
+      },
+      "score": {
+        "all": "Todos os Scores",
+        "high": "Alto (90-100)",
+        "good": "Bom (80-89)",
+        "fair": "Regular (70-79)",
+        "low": "Baixo (0-69)"
+      }
+    },
+    "sort": {
+      "score": "Ordenar por Score",
+      "guarantee": "Ordenar por Garantia",
+      "name": "Ordenar por Nome"
+    },
+    "card": {
+      "guarantee": "Garantia Total",
+      "created": "Criado em",
+      "nextVoting": "Próxima Votação",
+      "viewDetails": "Ver Detalhes"
+    },
+    "empty": {
+      "title": "Nenhum projeto encontrado",
+      "description": "Tente ajustar os filtros ou termo de busca",
+      "clearFilters": "Limpar Filtros"
+    }
+  },
+  "projectDetail": {
+    "labels": {
+      "category": "Categoria",
+      "auditedStatus": "Status de auditoria",
+      "kycStatus": "Status KYC",
+      "projectInfo": "Informações do Projeto",
+      "quickActions": "Ações Rápidas",
+      "vaultComposition": "Composição do Cofre",
+      "nativeToken": "Token nativo",
+      "psp22Token": "Token PSP22",
+      "scoreBreakdown": "Detalhamento da Pontuação",
+      "scoreHistory": "Histórico de Pontuação",
+      "contractAddress": "Endereço do Contrato",
+      "nextVoting": "Próxima Votação",
+      "variationLastYear": "Variação no último ano: {{value}}",
+      "trendPositive": "Tendência positiva",
+      "trendStable": "Estável",
+      "viewOnExplorer": "Ver contrato no explorador"
+    },
+    "quickActions": {
+      "addGuaranteeAria": "Adicionar garantia ao contrato do projeto",
+      "voteProposalAria": "Votar em proposta relacionada",
+      "viewHistoryAria": "Ver histórico do projeto",
+      "addGuarantee": "Adicione garantia ao seu contrato",
+      "voteProposal": "Votar em Proposta",
+      "viewHistory": "Ver Histórico"
+    },
+    "factors": {
+      "contractSecurity": "Segurança do Contrato",
+      "tokenLiquidity": "Liquidez do Token",
+      "projectStability": "Estabilidade do Projeto",
+      "contractSecurityDesc": "Avalia a qualidade do código, auditorias de segurança e proteções contra vulnerabilidades",
+      "tokenLiquidityDesc": "Avalia o volume de negociação, profundidade do mercado e facilidade de conversão",
+      "projectStabilityDesc": "Avalia o histórico do projeto, equipe, comunidade e transparência"
+    },
+    "chart": {
+      "distributionAria": "Distribuição da pontuação do projeto",
+      "yAxis": "Pontuação",
+      "xAxis": "Data"
+    },
+    "riskWarning": "Investimentos em cripto envolvem alto risco. Você pode perder parte ou todo o valor investido. Esta não é uma recomendação financeira.",
+    "scoreDescription": "Esta classificação é baseada na análise de segurança, liquidez e estabilidade do projeto. Projetos com pontuação mais alta oferecem maior garantia aos investidores.",
+    "scoreTooltip": "O Score de Garantia é uma métrica que avalia a confiabilidade do projeto com base em três pilares: Segurança do Contrato (40%), Liquidez do Token (30%) e Estabilidade do Projeto (30%). Pontuação de 0-100, onde maior é melhor."
+  }
+}

@@ -33,16 +33,16 @@ The Lunes Safeguard implements a comprehensive **0-100 normalized scoring system
 
 ### Score Components
 
-#### 1. Value-Based Scoring (0-70 points)
+#### 1. Value-Based Scoring (0-90 points)
 Tiered scoring based on total guarantee value using LUSDT as reference:
-- **≥ 1M LUSDT**: 70 points (maximum base score)
-- **≥ 500K LUSDT**: 60 points
-- **≥ 100K LUSDT**: 50 points
-- **≥ 50K LUSDT**: 40 points
-- **≥ 10K LUSDT**: 30 points
-- **≥ 5K LUSDT**: 20 points
-- **≥ 1K LUSDT**: 10 points
-- **Any guarantee**: 5 points (minimum)
+- **≥ 1M LUSDT**: 90 points (maximum base score)
+- **≥ 500K LUSDT**: 80 points
+- **≥ 100K LUSDT**: 70 points
+- **≥ 50K LUSDT**: 60 points
+- **≥ 10K LUSDT**: 50 points
+- **≥ 5K LUSDT**: 40 points
+- **≥ 1K LUSDT**: 30 points
+- **Any guarantee**: 10 points (minimum)
 
 #### 2. Asset Diversity Bonus (0-15 points)
 Encourages portfolio diversification:

@@ -1,23 +1,19 @@
 [package]
-name = "safeguard"
+name = "psp22"
 version = "1.0.0"
 edition = "2021"
 authors = ["Lunes Platform"]
-description = "Secure governance and withdrawal contract for Lunes platform"
+description = "PSP22 interface for Lunes Safeguard contract"
 license = "Apache-2.0"
 
 [dependencies]
 ink = { version = "4.3.0", default-features = false }
-
 scale = { package = "parity-scale-codec", version = "3", default-features = false, features = ["derive"] }
 scale-info = { version = "2.6", default-features = false, features = ["derive"], optional = true }
 
-psp22 = { path = "../../interfaces/psp22", default-features = false, features = ["ink-as-dependency"] }
-
 [lib]
-name = "safeguard"
+name = "psp22"
 path = "lib.rs"
-crate-type = ["cdylib"]
 
 [features]
 default = ["std"]
@@ -25,10 +21,5 @@ std = [
     "ink/std",
     "scale/std",
     "scale-info/std",
-    "psp22/std",
 ]
 ink-as-dependency = []
-e2e-tests = []
-
-[dev-dependencies]
-ink_e2e = "4.3.0"

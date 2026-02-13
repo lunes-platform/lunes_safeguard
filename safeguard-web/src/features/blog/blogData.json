@@ -1,0 +1,10 @@
+[
+  {
+    "slug": "bem-vindo-ao-safegard",
+    "title": "Bem-vindo ao SafeGard: Garantia Descentralizada",
+    "description": "Visão geral do protocolo e seus pilares de segurança e governança.",
+    "date": "2025-08-01",
+    "tags": ["introdução", "governança", "segurança"],
+    "content": "O SafeGard é um protocolo descentralizado para gestão de garantias.\n\n- Não custodial: não mantemos controle sobre fundos dos usuários.\n- Governança comunitária: decisões sobre liberações via votação on-chain.\n- Transparência: eventos e estados auditáveis."
+  }
+]
