@@ -58,6 +58,7 @@ export type ProjectId = number;
 export type VotingId = number;
 export type TokenId = number;
 export type Balance = bigint;
+export type AccountId = string;
 
 export type ProjectStatus = 'active' | 'voting' | 'liquidating' | 'closed' | 'paused';
 export type VoteResult = 'approved' | 'rejected' | 'pending';
@@ -711,9 +712,9 @@ class ContractService {
    * Start annual voting for a project
    */
   async startAnnualVoting(projectId: ProjectId): Promise<{ votingId: VotingId; txHash: string }> {
-    await delay(1000);
-
+    // MOCK MODE
     if (this.mockMode) {
+      await delay(1000);
       const newVotingId = MOCK_VOTINGS.length + 1;
       MOCK_VOTINGS.push({
         votingId: newVotingId,
@@ -737,8 +738,40 @@ class ContractService {
       };
     }
 
-    this.checkRealMode('startAnnualVoting');
-    throw new Error('Real implementation pending');
+    // REAL MODE
+    if (!this.isConnected || !this.contract || !this.currentAccount) {
+      throw new Error('Contract or account not connected');
+    }
+
+    try {
+      const injector = await polkadotService.getInjector(this.currentAccount);
+      const gasLimit = 100000000000;
+
+      const tx = this.contract.tx.start_annual_voting(
+        { gasLimit },
+        projectId
+      );
+
+      const result = await new Promise<{ votingId: VotingId; txHash: string }>((resolve, reject) => {
+        tx.signAndSend(this.currentAccount!, { signer: injector.signer }, (result) => {
+          if (result.status.isInBlock) {
+            // Find the voting ID from events if possible, or assume success
+            // For now, we return the txHash and a generic success indicator
+            resolve({
+              votingId: 0, // In dynamic apps, we'd parse the event
+              txHash: result.txHash.toHex()
+            });
+          } else if (result.isError) {
+            reject(new Error('Transaction failed'));
+          }
+        });
+      });
+
+      return result;
+    } catch (error) {
+      console.error('[ContractService] startAnnualVoting failed:', error);
+      throw error;
+    }
   }
 
   /**
@@ -773,7 +806,7 @@ class ContractService {
       // @ts-ignore
       const gasLimit = 100000000000;
 
-      const tx = this.contract.tx.vote(
+      const tx = this.contract.tx.vote_on_proposal(
         { gasLimit },
         projectId,
         voteValue
@@ -800,51 +833,113 @@ class ContractService {
    * Get voting info
    */
   async getVotingInfo(votingId: VotingId): Promise<VotingInfo | null> {
-    await delay(150);
-
     if (this.mockMode) {
+      await delay(150);
       return MOCK_VOTINGS.find(v => v.votingId === votingId) || null;
     }
 
-    this.checkRealMode('getVotingInfo');
-    return null;
+    if (!this.isConnected || !this.contract) return null;
+
+    try {
+      const { result, output } = await this.contract.query.get_voting_info(
+        this.currentAccount || '5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY',
+        { gasLimit: -1 },
+        votingId
+      );
+
+      if (result.isOk && output) {
+        const data = output.toHuman() as any;
+        if (!data) return null;
+
+        return {
+          votingId,
+          projectId: Number(data.projectId),
+          startTime: Number(data.startTimestamp),
+          endTime: Number(data.endTimestamp),
+          votesYes: BigInt(data.yesVotes.toString().replace(/,/g, '')),
+          votesNo: BigInt(data.noVotes.toString().replace(/,/g, '')),
+          quorumRequired: 75, // Default for annual voting
+          result: data.result.toLowerCase() as any,
+          isActive: data.result === 'Pending' && Date.now() < Number(data.endTimestamp),
+          timeLeft: Math.max(0, Number(data.endTimestamp) - Date.now())
+        };
+      }
+      return null;
+    } catch (error) {
+      console.error('[ContractService] getVotingInfo failed:', error);
+      return null;
+    }
   }
 
   /**
    * Get active voting for a project
    */
   async getActiveVoting(projectId: ProjectId): Promise<VotingInfo | null> {
-    await delay(150);
-
     if (this.mockMode) {
+      await delay(150);
       return MOCK_VOTINGS.find(v => v.projectId === projectId && v.isActive) || null;
     }
 
-    this.checkRealMode('getActiveVoting');
-    return null;
+    if (!this.isConnected || !this.contract) return null;
+
+    try {
+      // First, get the project vault to find current_voting_id
+      const { result, output } = await this.contract.query.get_project_vault(
+        this.currentAccount || '5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY',
+        { gasLimit: -1 },
+        projectId
+      );
+
+      if (result.isOk && output) {
+        const vault = output.toHuman() as any;
+        if (vault && vault.currentVotingId) {
+          const votingId = Number(vault.currentVotingId.replace(/,/g, ''));
+          return this.getVotingInfo(votingId);
+        }
+      }
+      return null;
+    } catch (error) {
+      console.error('[ContractService] getActiveVoting failed:', error);
+      return null;
+    }
   }
 
   /**
    * Check if user has voted
    */
-  async hasVoted(_projectId: ProjectId, _user: string): Promise<boolean> {
-    await delay(100);
-
+  async hasVoted(projectId: ProjectId, user: string): Promise<boolean> {
     if (this.mockMode) {
+      await delay(100);
       return Math.random() > 0.5; // Random for demo
     }
 
-    this.checkRealMode('hasVoted');
-    return false;
+    if (!this.isConnected || !this.contract) return false;
+
+    try {
+      const { result, output } = await this.contract.query.has_voted(
+        this.currentAccount || user,
+        { gasLimit: -1 },
+        projectId,
+        user
+      );
+
+      if (result.isOk && output) {
+        return (output.toHuman() as any) === true;
+      }
+      return false;
+    } catch (error) {
+      console.error('[ContractService] hasVoted failed:', error);
+      return false;
+    }
   }
 
   /**
    * Finalize voting
    */
   async finalizeVoting(projectId: ProjectId): Promise<{ result: VoteResult; txHash: string }> {
-    await delay(1000);
-
+    // MOCK MODE
     if (this.mockMode) {
+      await delay(1000);
       const voting = MOCK_VOTINGS.find(v => v.projectId === projectId && v.isActive);
       if (voting) {
         const totalVotes = voting.votesYes + voting.votesNo;
@@ -868,8 +963,37 @@ class ContractService {
       throw new Error('No active voting found');
     }
 
-    this.checkRealMode('finalizeVoting');
-    throw new Error('Real implementation pending');
+    // REAL MODE
+    if (!this.isConnected || !this.contract || !this.currentAccount) {
+      throw new Error('Contract or account not connected');
+    }
+
+    try {
+      const injector = await polkadotService.getInjector(this.currentAccount);
+      const gasLimit = 100000000000;
+
+      const tx = this.contract.tx.finalize_voting(
+        { gasLimit },
+        projectId
+      );
+
+      const txHash = await new Promise<string>((resolve, reject) => {
+        tx.signAndSend(this.currentAccount!, { signer: injector.signer }, (result) => {
+          if (result.status.isInBlock) {
+            resolve(result.txHash.toHex());
+          } else if (result.isError) {
+            reject(new Error('Transaction failed'));
+          }
+        });
+      });
+
+      // After finalization, the result would be in the events. 
+      // For the UI, we just return the txHash and expected result would be fetched by refreshing.
+      return { result: 'pending' as any, txHash };
+    } catch (error) {
+      console.error('[ContractService] finalizeVoting failed:', error);
+      throw error;
+    }
   }
 
   // ==================== SCORE FUNCTIONS ====================
@@ -921,27 +1045,52 @@ class ContractService {
   /**
    * Process claim for liquidating project
    */
-  async processClaim(_projectId: ProjectId): Promise<{ txHash: string; amount: Balance }> {
-    await delay(1000);
-
+  async processClaim(projectId: ProjectId): Promise<{ txHash: string; amount: Balance }> {
+    // MOCK MODE
     if (this.mockMode) {
+      await delay(1000);
       return {
         txHash: `0x${Math.random().toString(16).slice(2)}`,
         amount: BigInt(10000 * 10 ** 18) // Mock claim amount
       };
     }
 
-    this.checkRealMode('processClaim');
-    throw new Error('Real implementation pending');
+    if (!this.isConnected || !this.contract || !this.currentAccount) {
+      throw new Error('Contract or account not connected');
+    }
+
+    try {
+      const injector = await polkadotService.getInjector(this.currentAccount);
+      const gasLimit = 100000000000;
+
+      const tx = this.contract.tx.process_claim(
+        { gasLimit },
+        projectId
+      );
+
+      const txHash = await new Promise<string>((resolve, reject) => {
+        tx.signAndSend(this.currentAccount!, { signer: injector.signer }, (result) => {
+          if (result.status.isInBlock) {
+            resolve(result.txHash.toHex());
+          } else if (result.isError) {
+            reject(new Error('Transaction failed'));
+          }
+        });
+      });
+
+      return { txHash, amount: BigInt(0) }; // Amount would be confirmed in event
+    } catch (error) {
+      console.error('[ContractService] processClaim failed:', error);
+      throw error;
+    }
   }
 
   /**
    * Get user claim info
    */
-  async getUserClaim(projectId: ProjectId, user: string): Promise<ClaimInfo | null> {
-    await delay(150);
-
+  async getUserClaim(projectId: ProjectId, user: AccountId): Promise<ClaimInfo | null> {
     if (this.mockMode) {
+      await delay(150);
       return {
         projectId,
         user,
@@ -951,8 +1100,33 @@ class ContractService {
       };
     }
 
-    this.checkRealMode('getUserClaim');
-    return null;
+    if (!this.isConnected || !this.contract) return null;
+
+    try {
+      const { result, output } = await this.contract.query.get_user_claim(
+        this.currentAccount || user,
+        { gasLimit: -1 },
+        projectId,
+        user
+      );
+
+      if (result.isOk && output) {
+        const data = output.toHuman() as any;
+        if (!data) return null;
+
+        return {
+          projectId,
+          user,
+          claimableAmount: BigInt(data.claimableAmount?.toString().replace(/,/g, '') || '0'),
+          claimedAmount: BigInt(data.claimedAmount?.toString().replace(/,/g, '') || '0'),
+          claimDeadline: Number(data.claimDeadline || 0)
+        };
+      }
+      return null;
+    } catch (error) {
+      console.error('[ContractService] getUserClaim failed:', error);
+      return null;
+    }
   }
 }
 

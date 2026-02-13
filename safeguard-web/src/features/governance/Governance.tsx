@@ -93,19 +93,58 @@ const Governance = () => {
   const [voteChoice, setVoteChoice] = useState<'yes' | 'no' | null>(null)
   const [isLoading, setIsLoading] = useState(false)
 
-  // Connect to contract on mount
+  const [proposals, setProposals] = useState<Proposal[]>([])
+
+  // Fetch real proposals on mount
   useEffect(() => {
-    const init = async () => {
+    const fetchProposals = async () => {
       setIsLoading(true)
       try {
         await contractService.connect()
+
+        // Fetch projects to find active votings
+        const projects = await contractService.getAllProjects()
+        const activeVotingsPromises = projects
+          .filter(p => p.status === 'voting')
+          .map(async (p) => {
+            const votingInfo = await contractService.getActiveVoting(p.id)
+            if (!votingInfo) return null
+
+            return {
+              id: votingInfo.votingId,
+              title: `Votação Anual: ${p.name}`,
+              description: `Votação de governança para o projeto ${p.name}.`,
+              type: 'project_approval' as const,
+              status: votingInfo.isActive ? 'active' : votingInfo.result === 'approved' ? 'passed' : 'rejected',
+              projectId: p.id,
+              projectName: p.name,
+              voteEndTime: new Date(votingInfo.endTime).toISOString(),
+              quorumRequired: votingInfo.quorumRequired,
+              votesYes: Number(votingInfo.votesYes / BigInt(10 ** 18)),
+              votesNo: Number(votingInfo.votesNo / BigInt(10 ** 18)),
+              totalVotes: Number((votingInfo.votesYes + votingInfo.votesNo) / BigInt(10 ** 18)),
+              totalEligibleVoters: 1000, // Placeholder for weight
+              proposer: p.owner,
+              createdAt: new Date(votingInfo.startTime).toISOString()
+            } as Proposal
+          })
+
+        const activeProposals = (await Promise.all(activeVotingsPromises)).filter(p => p !== null) as Proposal[]
+
+        // Combine with passed/rejected from mock for visualization if empty
+        if (activeProposals.length === 0) {
+          setProposals(mockProposals)
+        } else {
+          setProposals(activeProposals)
+        }
+
       } catch (error) {
-        console.error('Failed to connect to contract:', error)
+        console.error('Failed to fetch proposals:', error)
       } finally {
         setIsLoading(false)
       }
     }
-    init()
+    fetchProposals()
   }, [])
 
   const handleVoteClick = (proposal: Proposal) => {
@@ -121,29 +160,21 @@ const Governance = () => {
     try {
       await contractService.vote(selectedProposal.projectId || selectedProposal.id, voteChoice === 'yes')
 
-      // Update local state (in real app, refetch from contract)
-      const updatedProposal = mockProposals.find(p => p.id === selectedProposal.id)
-      if (updatedProposal) {
-        if (voteChoice === 'yes') {
-          updatedProposal.votesYes += 100000
-        } else {
-          updatedProposal.votesNo += 100000
-        }
-        updatedProposal.totalVotes += 100000
-      }
+      // Refresh data
+      window.location.reload()
 
       setIsVoteModalOpen(false)
       setSelectedProposal(null)
       setVoteChoice(null)
     } catch (error) {
       console.error('Vote failed:', error)
-      alert('Falha ao registrar voto. Por favor, tente novamente.')
+      alert('Falha ao registrar voto. Verifique sua conexão e se você possui garantias no projeto.')
     } finally {
       setIsVoting(false)
     }
   }
 
-  const filteredProposals = mockProposals.filter(proposal => {
+  const filteredProposals = proposals.filter(proposal => {
     const matchesStatus = statusFilter === 'all' || proposal.status === statusFilter
     const matchesType = typeFilter === 'all' || proposal.type === typeFilter
     const matchesSearch = proposal.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -211,7 +242,7 @@ const Governance = () => {
             name: 'SafeGard Governance',
             description: t('governance.meta.description'),
             url: 'https://safeguard.lunes.io/governanca',
-            activeProposals: mockProposals.filter(p => p.status === 'active').length
+            activeProposals: proposals.filter(p => p.status === 'active').length
           }
         }}
       />
@@ -239,8 +270,8 @@ const Governance = () => {
               </p>
               <section className="flex flex-wrap justify-center gap-4" aria-label="Estatísticas de governança">
                 <article className="bg-white/20 backdrop-blur-sm rounded-lg px-6 py-4 min-w-[120px]">
-                  <div className="text-3xl font-bold text-white" aria-label={`${mockProposals.filter(p => p.status === 'active').length} votações ativas`}>
-                    {mockProposals.filter(p => p.status === 'active').length}
+                  <div className="text-3xl font-bold text-white" aria-label={`${proposals.filter(p => p.status === 'active').length} votações ativas`}>
+                    {proposals.filter(p => p.status === 'active').length}
                   </div>
                   <div className="text-sm text-white/80 font-medium">{t('governance.stats.activeVotes')}</div>
                 </article>
