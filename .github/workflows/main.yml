@@ -42,7 +42,7 @@ jobs:
           pm2 delete $PM2_NAME || true
           echo "pm2 $PM2_NAME e $TARGET_DIR"
           echo "Deploying"
-          npm install
+          npm install --force or --legacy-peer-deps
           npm run build
           pm2 start "npm run dev" --name $PM2_NAME
           pm2 save          
