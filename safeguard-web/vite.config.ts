@@ -45,8 +45,9 @@ export default defineConfig(({ command }) => ({
     minify: 'terser',
   },
   server: command === 'serve' ? {
-    host: 'localhost',
+    host: "0.0.0.0",
     port: 3002,
+    allowedHosts:["safeguard.lunes.io"],
     strictPort: true,
     hmr: {
       host: 'localhost',
